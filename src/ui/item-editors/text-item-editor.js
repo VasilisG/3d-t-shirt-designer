@@ -8,7 +8,6 @@ import {
   DEFAULT_TEXT_COLOR,
   TEXT_ITEM_DEFAULT_COLORS,
   MODE_CREATE,
-  MODE_UPDATE,
   TEXT_ITEM_COLOR_PICKER_SELECTORS,
   COLOR_PICKER_OPTIONS,
   DEFAULT_BORDER_WIDTH,
@@ -30,20 +29,11 @@ class TextItemEditor extends AbstractItemEditor{
 
     super();
 
-    this.mode = MODE_CREATE;
-
-    this.options = {};
-
     this.textColorPicker = null;
     this.backgroundColorPicker = null;
     this.borderColorPicker = null;
 
-    this.dialogSuccessCallbacks = [];
-    this.dialogCancelCallbacks = [];
-    this.dialogCloseCallbacks = [];
-
     this.selector = 'text-item';
-
     this.editor = document.getElementById(`${this.selector}-editor`);
     this.previewCanvas = document.getElementById(`${this.selector}-preview-canvas`);
     this.canvasRenderer = new CanvasRenderer(this.previewCanvas);
@@ -51,38 +41,9 @@ class TextItemEditor extends AbstractItemEditor{
     this._initializeFormListeners();    
   }
 
-  open() {
-    this.editor.classList.add('popup-visible');
-    this.mode = this.getMode();
-    this._updateEditorState();
-  }
-
-  close(type) {
-    this.editor.classList.remove('popup-visible');
-    this._emitDialog(type);
-    this._reset();
-  }
-
-  onDialogSuccess(callback) {
-    this.dialogSuccessCallbacks.push(callback);
-  }
-
-  onDialogCancel(callback) {
-    this.dialogCancelCallbacks.push(callback);
-  }
-
-  onDialogClose(callback) {
-    this.dialogCloseCallbacks.push(callback);
-  }
-
-  getMode() {
-    return this.item === null ? MODE_CREATE : MODE_UPDATE;
-  }
-
   _updateEditorState() {
-    this._updateOptions();
+    super._updateEditorState();
     this._updateInputFieldValues();
-    this._updatePreview();
   }
 
   _updateOptions() {
@@ -119,12 +80,11 @@ class TextItemEditor extends AbstractItemEditor{
   }
 
   _initializeFormListeners() {
+    super._initializeFormListeners();
+
     this._initializeContentInputListener();
     this._initializeDropdownListeners();
     this._initializeControlInputListeners();
-    this._initializeCloseActionListener();
-    this._initializeSuccessActionListener();
-    this._initializeCancelActionListener();
 
     this.textColorPicker = this._initializeColorPicker('text-color');
     this.backgroundColorPicker = this._initializeColorPicker('background-color');
@@ -313,53 +273,6 @@ class TextItemEditor extends AbstractItemEditor{
         this.options.paddingY = value;
         break;
     }
-  }
-
-  _initializeCloseActionListener() {
-    const closeButton = document.getElementById(`${this.selector}-editor-close-button`);
-    closeButton.addEventListener('click', () => {
-      this.close('close');
-    });
-  }
-
-  _initializeSuccessActionListener() {
-    const successButton = document.getElementById(`${this.selector}-submit-button`);
-    successButton.addEventListener('click', () => {
-      this.close('success');
-    });
-  }
-
-  _initializeCancelActionListener() {
-    const cancelButton = document.getElementById(`${this.selector}-cancel-button`);
-    cancelButton.addEventListener('click', () => {
-      this.close('cancel');
-    });
-  }
-
-  _emitDialog(type) {
-    switch(type){
-      case 'success':
-        this._emitDialogSuccess(this.options);
-        break;
-      case 'cancel':
-        this._emitDialogCancel();
-        break;
-      case 'close':
-        this._emitDialogClose();
-        break;
-    }
-  }
-
-  _emitDialogSuccess() {
-    this.dialogSuccessCallbacks.forEach(callback => callback(this.options));
-  }
-
-  _emitDialogCancel() {
-    this.dialogCancelCallbacks.forEach(callback => callback());
-  }
-
-  _emitDialogClose() {
-    this.dialogCloseCallbacks.forEach(callback => callback());
   }
 
   _reset() {

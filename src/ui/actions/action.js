@@ -6,11 +6,11 @@ class Action {
    * Create an action
    * @constructor
    * @param {string} actionElementId - The DOM element ID for this action
-   * @param {string} state - The state associated with this action
+   * @param {Array} state - The state associated with this action
    * @throws {Error} If element with provided ID is not found
    */
-  constructor(actionElementId, state) {
-    this.state = state;
+  constructor(actionElementId, states) {
+    this.states = states;
     this.element = document.getElementById(actionElementId);
     if (!this.element) {
       throw new Error(`Element with ID ${actionElementId} not found.`);
@@ -29,18 +29,18 @@ class Action {
 
   /**
    * Set the state of the action
-   * @param {string} state - The new state to set
+   * @param {Array} states - The new state to set
    */
-  setState(state){
-    this.state = state;
+  setStates(states){
+    this.states = states;
   }
 
   /**
    * Get the current state of the action
-   * @returns {string} The current state
+   * @returns {Array} The current state
    */
-  getState(){
-    return this.state;
+  getStates(){
+    return this.states;
   }
 
   /**
@@ -48,7 +48,7 @@ class Action {
    * @param {string} currentState - The current application state
    */
   updateStatus(currentState){
-    if(this.state === currentState) {
+    if(this.states.includes(currentState)) {
       this.element.classList.add('active');
     }
     else this.element.classList.remove('active');

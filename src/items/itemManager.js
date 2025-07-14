@@ -36,7 +36,6 @@ class ItemManager {
    * @returns {TextItem|ImageItem|undefined} The found item or undefined
    */
   getItem(itemId) {
-    console.log(this.items.find(item => item.id === itemId));
     return this.items.find(item => item.id === itemId);
   }
 

@@ -229,9 +229,8 @@ class ImageItemEditor extends AbstractItemEditor {
   }
 
   _updateEditorState() {
-    this._updateOptions();
+    super._updateEditorState();
     this._updateInputFieldValues();
-    this._updatePreview();
   }
 }
 

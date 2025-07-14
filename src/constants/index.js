@@ -140,6 +140,11 @@ export const ITEM_LIST_TAB_IDS = [
   'items-tab-image'
 ];
 
+/* Item actions */
+export const ACTION_SELECT = 'action-select';
+export const ACTION_TEXT = 'action-text';
+export const ACTION_IMAGE = 'action-image';
+
 /* App states. */
 export const STATES = Object.freeze({
   SELECT: Symbol('select'),

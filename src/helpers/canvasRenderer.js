@@ -83,9 +83,7 @@ class CanvasRenderer {
   _applyTransforms(options) {
     if(options.transforms){
       for(const transformKey of Object.keys(options.transforms)){
-        console.log(transformKey);
         if(this.transforms[transformKey]){
-          console.log(this.transforms[transformKey]);
           this.transforms[transformKey].apply(this.ctx, options);
         }
       }

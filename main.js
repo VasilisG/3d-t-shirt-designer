@@ -5,10 +5,19 @@ import '@simonwep/pickr/dist/themes/monolith.min.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import TextItem from './src/items/textItem';
+import Item from './src/items/item';
 import ItemManager from './src/items/itemManager';
 import ColorPicker from './src/ui/color-picker';
-import { ITEM_IMAGE, ITEM_TEXT, MODE_CREATE, STATES } from './src/constants';
+import { 
+  ACTION_IMAGE, 
+  ACTION_SELECT, 
+  ACTION_TEXT, 
+  ITEM_IMAGE, 
+  ITEM_TEXT, 
+  MODE_CREATE, 
+  STATES, 
+  ITEM_LIST_TAB_IDS 
+} from './src/constants';
 import TextItemEditor from './src/ui/item-editors/text-item-editor';
 import ImageItemEditor from './src/ui/item-editors/image-item-editor';
 import ActionMenu from './src/ui/actions/actions-menu';
@@ -48,7 +57,7 @@ let intersection = {
 };
 
 /* TextItem object. */
-let textItem = null;
+let item = null;
 
 const mouse = new THREE.Vector2();
 let intersects = [];
@@ -120,8 +129,8 @@ const onPointerMove = (event) => {
 }
 
 const updatePreviewTextItem = (intersection) => {
-  if(textItem !== null) {
-    textItem.updatePosition(intersection);
+  if(item !== null) {
+    item.updatePosition(intersection);
   }
 }
 
@@ -170,12 +179,12 @@ const checkIntersection = (x, y) => {
 }
 
 const placeItem = () => {
-  if(textItem !== null) {
-    textItem.textureMaterial.opacity = 1;
-    itemManager.addItem(textItem);
-    scene.add(textItem.textureMesh);
+  if(item !== null) {
+    item.textureMaterial.opacity = 1;
+    itemManager.addItem(item);
+    scene.add(item.textureMesh);
     itemsTabContainer.updateTabItems(itemManager.getItems());
-    textItem = null;
+    item = null;
   }
 }
 
@@ -247,18 +256,20 @@ const runApp = async () => {
   textItemEditor.onDialogSuccess((options) => {
     if(textItemEditor.getMode() === MODE_CREATE){
       currentState = STATES.PLACE;
-      textItem = new TextItem(intersection, options, true, ITEM_TEXT);
-      scene.add(textItem.textureMesh);
+      item = new Item(intersection, options, true, ITEM_TEXT);
+      scene.add(item.textureMesh);
       windowOpen = false;
       actionsMenu.updateMenuItemStatus(currentState);
+      itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[0]);
     }
     else {
       currentState = STATES.SELECT;
       let itemId = textItemEditor.getItem().getId();
-      textItem = itemManager.getItem(itemId);
-      textItem.update(options);
+      item = itemManager.getItem(itemId);
+      item.update(options);
       itemsTabContainer.updateTabItems(itemManager.getItems());
-      textItem = null;
+      itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[0]);
+      item = null;
       textItemEditor.setItem(null);
       windowOpen = false;
       actionsMenu.updateMenuItemStatus(currentState);
@@ -284,18 +295,20 @@ const runApp = async () => {
   imageItemEditor.onDialogSuccess((options) => {
     if(imageItemEditor.getMode() === MODE_CREATE){
       currentState = STATES.PLACE;
-      textItem = new TextItem(intersection, options, true, ITEM_IMAGE);
-      scene.add(textItem.textureMesh);
+      item = new Item(intersection, options, true, ITEM_IMAGE);
+      scene.add(item.textureMesh);
       windowOpen = false;
       actionsMenu.updateMenuItemStatus(currentState);
+      itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[1]);
     }
     else {
       currentState = STATES.SELECT;
       let itemId = imageItemEditor.getItem().getId();
-      textItem = itemManager.getItem(itemId);
-      textItem.update(options);
+      item = itemManager.getItem(itemId);
+      item.update(options);
       itemsTabContainer.updateTabItems(itemManager.getItems());
-      textItem = null;
+      itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[1]);
+      item = null;
       imageItemEditor.setItem(null);
       windowOpen = false;
       actionsMenu.updateMenuItemStatus(currentState);
@@ -323,14 +336,16 @@ const runApp = async () => {
     const itemType = item.getType();
     switch(itemType) {
       case ITEM_TEXT:
-        currentState = STATES.TEXT_UPDATE;
+        currentState = STATES.TEXT_EDIT;
         textItemEditor.setItem(item);
         textItemEditor.open();
+        actionsMenu.updateMenuItemStatus(currentState);
         break;
       case ITEM_IMAGE:
-        currentState = STATES.IMAGE_UPDATE;
+        currentState = STATES.IMAGE_EDIT;
         imageItemEditor.setItem(item);
         imageItemEditor.open();
+        actionsMenu.updateMenuItemStatus(currentState);
         break;
       default:
         break;
@@ -349,12 +364,12 @@ const runApp = async () => {
   /* Initialize actions menu. */
   const actionsMenu = new ActionMenu();
 
-  const selectAction = new Action('action-select', STATES.SELECT);
+  const selectAction = new Action(ACTION_SELECT, [STATES.SELECT]);
   selectAction.onClick(() => {
     console.log('Select action clicked.');
   });
 
-  const addTextAction = new Action('action-text', STATES.TEXT_CREATE);
+  const addTextAction = new Action(ACTION_TEXT, [STATES.TEXT_CREATE, STATES.TEXT_EDIT]);
   addTextAction.onClick(() => {
     if(!windowOpen) {
       textItemEditor.open();
@@ -364,7 +379,7 @@ const runApp = async () => {
     }
   });
 
-  const addImageAction = new Action('action-image', STATES.IMAGE_CREATE);
+  const addImageAction = new Action(ACTION_IMAGE, [STATES.IMAGE_CREATE, STATES.IMAGE_EDIT]);
   addImageAction.onClick(() => {
     if(!windowOpen) {
       imageItemEditor.open();
