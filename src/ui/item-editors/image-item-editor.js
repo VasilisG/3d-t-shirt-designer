@@ -35,6 +35,7 @@ class ImageItemEditor extends AbstractItemEditor {
     this.canvasRenderer = new CanvasRenderer(this.previewCanvas, ITEM_IMAGE);
     this._updateOptions();
     this._initializeFormListeners();
+    this._updateSubmitButton();
   }
 
   _updateOptions() {
@@ -164,6 +165,7 @@ class ImageItemEditor extends AbstractItemEditor {
         this.options.image = image;
         this.options.image.width = image.width;
         this.options.image.height = image.height;
+        this._updateSubmitButton();
         this._updatePreview();
       };
       image.onerror = (error) => {
@@ -231,6 +233,14 @@ class ImageItemEditor extends AbstractItemEditor {
   _updateEditorState() {
     super._updateEditorState();
     this._updateInputFieldValues();
+  }
+
+  _updateSubmitButton() {
+    const submitButton = document.getElementById(`${this.selector}-submit-button`);
+    if(!this.options.image){
+      submitButton.disabled = true;
+    }
+    else submitButton.disabled = false;
   }
 }
 

@@ -38,7 +38,8 @@ class TextItemEditor extends AbstractItemEditor{
     this.previewCanvas = document.getElementById(`${this.selector}-preview-canvas`);
     this.canvasRenderer = new CanvasRenderer(this.previewCanvas);
 
-    this._initializeFormListeners();    
+    this._initializeFormListeners();
+    this._updateSubmitButton(); 
   }
 
   _updateEditorState() {
@@ -182,8 +183,17 @@ class TextItemEditor extends AbstractItemEditor{
     const contentField = document.getElementById('text-content-field');
     contentField.addEventListener('input', () => {
       this.options.text = contentField.value;
+      this._updateSubmitButton();
       this._updatePreview();
     });
+  }
+
+  _updateSubmitButton() {
+    const submitButton = document.getElementById(`${this.selector}-submit-button`);
+    if(!this.options.text || this.options.text.trim() === ''){
+      submitButton.disabled = true;
+    }
+    else submitButton.disabled = false;
   }
 
   _initializeDropdownListeners() {
