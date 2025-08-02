@@ -358,10 +358,14 @@ ul {
 .tab-list-item-canvas {
   max-width: 100%;
 }
+.actions-list .action-item:not(.active):hover {
+  background: #58a5e4;;
+}
 .actions-list .action-item.active {
   background: #1171c0;
 }
-.action-item.active .action-icon {
+.action-item.active .action-icon,
+.action-item:not(.active):hover .action-icon {
   filter: invert(1);
 }
 .actions-list .pickr .pcr-button::before,

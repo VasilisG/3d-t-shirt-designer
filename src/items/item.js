@@ -89,7 +89,7 @@ class Item {
     this._size = new THREE.Vector3(
       pxToWorldUnits(this._canvas.width),
       pxToWorldUnits(this._canvas.height),
-      1
+      0.1
     );
   
     this._texture = new THREE.CanvasTexture(this._canvas);

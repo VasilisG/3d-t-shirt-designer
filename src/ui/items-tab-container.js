@@ -1,7 +1,15 @@
 import { ITEM_TEXT, ITEM_IMAGE, ITEM_LIST_TAB_IDS } from "../constants";
 
+/**
+ * Class representing a tab container for managing items in the T-Shirt Designer
+ */
 class ItemsTabContainer {
 
+  /**
+   * Create an items tab container
+   * @constructor
+   * @param {string} [activeTabId=ITEM_LIST_TAB_IDS[0]] - The ID of the initially active tab
+   */
   constructor(activeTabId = ITEM_LIST_TAB_IDS[0]) {
     this.tabButtons = [];
     this.tabItems = [];
@@ -10,12 +18,21 @@ class ItemsTabContainer {
     this._initialize(activeTabId);
   }
 
+  /**
+   * Initialize the tab container with the specified active tab
+   * @private
+   * @param {string} activeTabId - The ID of the tab to activate
+   */
   _initialize(activeTabId) {
     this._initializeTabButtons();
     this._initializeTabItems();
     this.switchToTab(activeTabId);
   }
 
+  /**
+   * Initialize all tab buttons and add event listeners
+   * @private
+   */
   _initializeTabButtons() {
     this.tabButtons = {};
     for(const tabId of ITEM_LIST_TAB_IDS) {
@@ -26,6 +43,10 @@ class ItemsTabContainer {
     }
   }
 
+  /**
+   * Initialize all tab items by finding their DOM elements
+   * @private
+   */
   _initializeTabItems() {
     this.tabItems = {};
     for(const tabId of ITEM_LIST_TAB_IDS) {
@@ -33,11 +54,20 @@ class ItemsTabContainer {
     }
   }
 
+  /**
+   * Switch to the specified tab
+   * @param {string} id - The ID of the tab to switch to
+   */
   switchToTab(id) {
     this._switchTabButton(id);
     this._switchTabItem(id);
   }
 
+  /**
+   * Update the active state of tab buttons
+   * @private
+   * @param {string} id - The ID of the tab button to activate
+   */
   _switchTabButton(id) {
     for(let [tabId, tabButton] of Object.entries(this.tabButtons)){
       if(tabId === id) {
@@ -48,6 +78,11 @@ class ItemsTabContainer {
     }
   }
 
+  /**
+   * Update the active state of tab items
+   * @private
+   * @param {string} id - The ID of the tab item to activate
+   */
   _switchTabItem(id) {
     for(let [tabId, tabItem] of Object.entries(this.tabItems)){
       if(tabId === id) {
@@ -58,12 +93,22 @@ class ItemsTabContainer {
     }
   }
 
+  /**
+   * Clear all content from tab items
+   * @private
+   */
   _clearTabItems() {
     for(let tabId of Object.keys(this.tabItems)){
       this.tabItems[tabId].innerHTML = '';
     }
   }
 
+  /**
+   * Create action buttons (edit and delete) for a tab list item
+   * @private
+   * @param {Object} item - The item to create buttons for
+   * @returns {HTMLElement} The container element with action buttons
+   */
   _createTabListButtons(item) {
     const tabListButtons = document.createElement('div');
     tabListButtons.classList.add('tab-list-buttons');
@@ -91,6 +136,15 @@ class ItemsTabContainer {
     return tabListButtons;
   }
 
+  /**
+   * Create a single action button with icon
+   * @private
+   * @param {string[]} classList - CSS classes for the button
+   * @param {string[]} imageClassList - CSS classes for the button image
+   * @param {string} imageSrc - Source URL for the button icon
+   * @param {string} altText - Alt text for the button icon
+   * @returns {HTMLElement} The created button element
+   */
   _createTabListButton(classList, imageClassList, imageSrc, altText){
     const button = document.createElement('button');
     const image = document.createElement('img');
@@ -104,6 +158,12 @@ class ItemsTabContainer {
     return button;
   }
 
+  /**
+   * Create a canvas element displaying the item's visual representation
+   * @private
+   * @param {Object} item - The item to create canvas for
+   * @returns {HTMLElement} The canvas container element
+   */
   _createItemCanvas(item) {
     const itemCanvasContainer = document.createElement('div');
     itemCanvasContainer.classList.add('tab-list-item-canvas-container');
@@ -120,6 +180,13 @@ class ItemsTabContainer {
     return itemCanvasContainer;
   }
 
+  /**
+   * Create a complete tab list item with buttons and canvas
+   * @private
+   * @param {HTMLElement} buttons - The action buttons container
+   * @param {HTMLElement} canvasContainer - The canvas container
+   * @returns {HTMLElement} The complete tab list item element
+   */
   _createTabListItem(buttons, canvasContainer) {
     const tabListItem = document.createElement('div');
     tabListItem.classList.add('tab-list-item');
@@ -128,6 +195,12 @@ class ItemsTabContainer {
     return tabListItem;
   }
 
+  /**
+   * Add a tab list item to the specified parent container
+   * @private
+   * @param {HTMLElement} parent - The parent container to add the item to
+   * @param {Object} item - The item to add
+   */
   _addTabListItem(parent, item) {
     const tabListItemButtons = this._createTabListButtons(item);
     const itemCanvasContainer = this._createItemCanvas(item);
@@ -135,6 +208,10 @@ class ItemsTabContainer {
     parent.appendChild(tabListItem);
   }
 
+  /**
+   * Update all tab items with the provided items array
+   * @param {Object[]} items - Array of items to display in tabs
+   */
   updateTabItems(items) {
     this._clearTabItems();
     for(let item of items){
@@ -149,20 +226,38 @@ class ItemsTabContainer {
     }
   }
 
+  /**
+   * Register callback for item delete events
+   * @param {Function} callback - Callback function to execute when item is deleted
+   */
   onItemDelete(callback) {
     this.deleteItemCallback = callback;
   }
 
+  /**
+   * Register callback for item edit events
+   * @param {Function} callback - Callback function to execute when item is edited
+   */
   onItemEdit(callback) {
     this.editItemCallback = callback;
   }
 
+  /**
+   * Emit item delete event
+   * @private
+   * @param {Object} item - The item to delete
+   */
   _emitItemDelete(item) {
     if(this.deleteItemCallback) {
       this.deleteItemCallback(item);
     }
   }
 
+  /**
+   * Emit item edit event
+   * @private
+   * @param {Object} item - The item to edit
+   */
   _emitItemEdit(item) {
     if(this.editItemCallback) {
       this.editItemCallback(item);
