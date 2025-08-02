@@ -5,6 +5,7 @@ import '@simonwep/pickr/dist/themes/monolith.min.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import ItemManager from './items/itemManager';
 import ActionMenu from './ui/actions/actions-menu';
 import Action from './ui/actions/action';
@@ -76,12 +77,12 @@ class App {
   }
 
   async _init() {
-    this._initializeScene();
-    this._initializeCamera();
-    this._initializeControls();
+    // this._initializeScene();
+    // this._initializeCamera();
     this._initializeRenderer();
+    this._initializeControls();
     this._showAxesHelper(false, 5);
-    this._initializeLighting(true, 0xffffff, 1);
+    this._initializeLighting(true, 0xffffff, 0.1);
     
     await this._loadFonts();
     this._load3DModel('./assets/models/t-shirt.glb');
@@ -110,8 +111,23 @@ class App {
 
   _initializeLighting(showLight, color, intensity) {
     if(showLight) {
-      const light = new THREE.DirectionalLight(color, intensity);
-      this.camera.add(light);
+
+      /* Adding scene light. */
+      const sceneLight = new THREE.HemisphereLight(color, color, intensity);
+      this.scene.add(sceneLight);
+      /* Adding scene light end. */
+
+      /* Adding ambient light. */
+      const ambientLight = new THREE.AmbientLight(color, intensity);
+      this.camera.add(ambientLight);
+      /* Adding ambient light end. */
+
+      /* Adding directional light. */
+      const directionalLight = new THREE.DirectionalLight(color, intensity);
+      directionalLight.position.set(0.5, 0, 0.866);
+      directionalLight.castShadow = true;
+      this.camera.add(directionalLight);
+      /* Adding directional light end. */
     }  
   }
 
@@ -135,9 +151,28 @@ class App {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Enable tone mapping and gamma correction (for realistic lighting)
-    this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.setClearColor(0xC0C0C0);
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1;
+
+    // this.renderer.setClearColor(0xC0C0C0);
+
+    /* Initialize scene. */
+    const environment = new RoomEnvironment(this.renderer);
+    const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x333333);
+    this.scene.environment = pmremGenerator.fromScene(environment).texture;
+    environment.dispose();
+    /* Scene initialization ends. */
+
+    /* Initialize camera. */
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    this.camera.position.set(0, 0, 1);
+    this.camera.lookAt(0, 0, 0);
+    this.scene.add(this.camera);
+    /* Initialize camera ends. */
+
     this.renderer.setAnimationLoop(() => this._animate());
   }
 
@@ -262,6 +297,13 @@ class App {
       this.model3D.traverse((child) => {
         if (child.type === 'Mesh') {
           this.model3DMesh = child;
+
+          if (child.material) {
+            // Reduce lighting impact while keeping some shading.
+            child.material.roughness = 1.0; 
+            child.material.metalness = 0.0;
+            child.material.envMapIntensity = 0.2;
+          }
         }
       });
       this.scene.add(this.model3D);

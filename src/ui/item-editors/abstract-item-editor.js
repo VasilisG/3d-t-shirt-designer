@@ -113,6 +113,11 @@ class AbstractItemEditor {
   _updateEditorState() {
     this._updateOptions();
     this._updatePreview();
+    this._updateSubmitButton();
+  }
+
+  _updateSubmitButton() {
+    return;
   }
 
   _updateOptions() {

@@ -11,9 +11,11 @@ class FlipTransform extends AbstractTransform {
       const startX = horizontalFlip < 0 ? -image.width : 0;
       const startY = verticalFlip < 0 ? -image.height : 0;
 
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
       ctx.save();
       ctx.scale(horizontalFlip, verticalFlip);
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      
       ctx.drawImage(image, 
         startX, 
         startY, 

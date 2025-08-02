@@ -104,7 +104,9 @@ class Item {
       depthTest: true,
       depthWrite: false,
       polygonOffset: true,
-      polygonOffsetFactor: -4
+      polygonOffsetFactor: -4,
+      side: THREE.FrontSide,
+      alphaTest: 0.1  
     });
   }
 
