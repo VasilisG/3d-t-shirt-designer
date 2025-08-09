@@ -24,6 +24,14 @@ class FontLoader {
   }
 
   /**
+   * Get all available fonts
+   * @returns {Array} Array of available fonts from TEXT_FONTS constant
+   */
+  getAvailableFonts() {
+    return TEXT_FONTS;
+  }
+
+  /**
    * Load all fonts from the TEXT_FONTS constant
    * @async
    */

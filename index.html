@@ -9,6 +9,7 @@
     </head>
     <body class="app-wrapper">
         <div class="main-app-container">
+
             <!-- Actions Container -->
             <div class="actions-container" id="actions-container">
                 <ul class="actions-list">
@@ -18,6 +19,7 @@
                     <li class="action-item" id="action-image" title="Add Image Item"><img class="action-icon add-image-icon" src="/assets/icons/image.svg" alt="Add Image"/></li>
                 </ul>
             </div>
+
             <!-- Items List Container -->
              <div class="items-list-container" id="items-list-container">
                 <div class="item-list-container-inner">
@@ -33,6 +35,7 @@
                     </div>
                 </div>
              </div>
+
             <!-- Text item creator / editor -->
              <div id="text-item-editor" class="text-item-editor-container popup-container">
                 <div class="close-action-container">
@@ -133,6 +136,7 @@
                     </div>
                 </form>
              </div>
+
              <!-- Image item creator / editor -->
               <div id="image-item-editor" class="image-item-editor-container popup-container">
                 <div class="close-action-container">
@@ -198,7 +202,16 @@
                     </div>
                 </form>
             </div>
-             <!-- 3D model render area. -->
+
+            <!-- Loading bar -->
+            <div class="loading-bar-container" id="loading-bar-container">
+                <div class="loading-bar">
+                    <label class="loading-message" id="loading-message" for="loading-progress">Loading:</label>
+                    <progress class="loading-progress" id="loading-progress" value="0" max="100">0%</progress>
+                </div>
+            </div>
+
+            <!-- 3D model render area. -->
             <canvas class="canvas-container" id="render-area"></canvas>
         </div>
         <script type="module" src="./main.js"></script>

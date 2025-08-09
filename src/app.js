@@ -25,6 +25,7 @@ import {
   ACTION_TEXT,
   ACTION_IMAGE
 } from './constants';
+import LoadingBar from './ui/loading-bar';
 
 class App {
 
@@ -53,6 +54,9 @@ class App {
   imageItemEditor = null;
   itemsTabContainer = null;
 
+  /* Loading bar UI elements. */
+  loadingBar = new LoadingBar();
+
   /* Selection variables. */
   line = null;
   moved = false;
@@ -77,15 +81,17 @@ class App {
   }
 
   async _init() {
-    // this._initializeScene();
-    // this._initializeCamera();
+
+    /* Show Loading bar. */
+    this.loadingBar.show();
+
     this._initializeRenderer();
     this._initializeControls();
     this._showAxesHelper(false, 5);
     this._initializeLighting(true, 0xffffff, 0.1);
     
-    await this._loadFonts();
     this._load3DModel('./assets/models/t-shirt.glb');
+    await this._loadFonts();
     
     this._initializeRaycaster();
     this._initializeTextItemEditor();
@@ -96,6 +102,9 @@ class App {
     
     // Initialize line geometry (from main.js)
     this._initializeLineGeometry();
+
+    /* Hide loading bar. */
+    this.loadingBar.hide();
   }
 
   _initializeScene() {
@@ -281,8 +290,16 @@ class App {
 
   async _loadFonts() {
     const fontLoader = new FontLoader();
+    const availableFonts = fontLoader.getAvailableFonts();
+    let currentFontIndex = 0;
+
     fontLoader.onFontLoaded((fontItem) => {
-      //console.log(`Font loaded: ${fontItem.name}`);
+      currentFontIndex++;
+      this.loadingBar.updateProgress(
+        currentFontIndex, 
+        availableFonts.length, 
+        `Loading Font ${currentFontIndex} of ${availableFonts.length}`
+      );
     });
     fontLoader.onFontError((fontItem) => {
       console.error(`Error loading font: ${fontItem.name}`);
@@ -290,8 +307,14 @@ class App {
     await fontLoader.loadFonts();
   }
 
-  _load3DModel(path) {
+  async _load3DModel(path) {
+
+    /* Update loading bar. */
+    this.loadingBar.updateProgress(0, 100, 'Loading 3D Model');
+
+    /* Load model. */
     const gltfLoader = new GLTFLoader();
+
     gltfLoader.load(path, (gltf) => {
       this.model3D = gltf.scene;
       this.model3D.traverse((child) => {
@@ -309,8 +332,10 @@ class App {
       this.scene.add(this.model3D);
       this.colorPicker = new ColorPicker(this.model3DMesh);
       this.intersection.object = this.model3D.children[0];
-    }, (error) => {
-      // console.log(error);
+
+    }, (status) => {
+      /* Update loading bar progress. */
+      this.loadingBar.updateProgress(status.loaded, status.total, 'Loading 3D Model');
     });
   }
 

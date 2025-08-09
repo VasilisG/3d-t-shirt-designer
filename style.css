@@ -397,3 +397,33 @@ input[type="checkbox"] {
   height: 20px;
   margin: auto;
 }
+.loading-bar-container {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: -1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .2s ease;
+  opacity: 0;
+}
+#loading-message {
+  color: #fff;
+  margin-right: 20px;
+}
+.loading-bar-container-enabled {
+  opacity: 1;
+  z-index: 1000;
+}
+progress::-webkit-progress-bar,
+progress::-moz-progress-bar {
+  background-color: #aaa;
+}
+progress::-webkit-progress-value,
+progress::-moz-progress-value {
+  background-color: #fff;
+}
