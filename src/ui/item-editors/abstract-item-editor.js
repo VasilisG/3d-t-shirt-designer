@@ -17,6 +17,8 @@ class AbstractItemEditor {
     this.selector = null;
     this.editor = null;
     this.canvasRenderer = null;
+
+    this.popupOverlay = document.getElementById('popup-overlay');
   }
 
   getMode() {
@@ -35,12 +37,14 @@ class AbstractItemEditor {
 
   open() {
     this.editor.classList.add('popup-visible');
+    this.popupOverlay.classList.add('popup-overlay-enabled');
     this.mode = this.getMode();
     this._updateEditorState();
   }
 
   close(type) {
     this.editor.classList.remove('popup-visible');
+    this.popupOverlay.classList.remove('popup-overlay-enabled');
     this._emitDialog(type);
     this._reset();
   }
