@@ -26,6 +26,7 @@ import {
   ACTION_IMAGE
 } from './constants';
 import LoadingBar from './ui/loading-bar';
+import ItemSelector from './ui/item-selector';
 
 class App {
 
@@ -46,6 +47,9 @@ class App {
 
   /* Item management initialization. */
   itemManager = new ItemManager();
+
+  /* Item selector initialization. */
+  itemSelector = new ItemSelector();
 
   /* Action menu UI elements. */
   actionsMenu = null;
@@ -75,6 +79,7 @@ class App {
 
   /* Item being added or edited. */
   item = null;
+  focusedItem = null;
 
   constructor() {
     this._init();
@@ -217,6 +222,20 @@ class App {
       if (event.isPrimary) {
         this.checkIntersection(event.clientX, event.clientY);
       }
+    }
+    if(this.currentState === STATES.SELECT){
+      this.mouse.x = event.clientX / this.canvas.clientWidth * 2 - 1;
+      this.mouse.y = - (event.clientY / this.canvas.clientHeight) * 2 + 1;
+      this.focusedItem = this.itemSelector.getFocusedItem( this.itemManager, this.mouse, this.camera);
+      if(this.focusedItem) {
+        this.focusedItem.textureMaterial.opacity = 0.5;
+      }
+      else {
+        this.itemManager.getItems().forEach(item => {
+          item.textureMaterial.opacity = 1.0;
+        });
+      }
+      /* Add select logic. */
     }
   }
 

@@ -23,7 +23,7 @@ import {
 } from '../../constants';
 import AbstractItemEditor from './abstract-item-editor';
 
-class TextItemEditor extends AbstractItemEditor{
+class TextItemEditor extends AbstractItemEditor {
 
   constructor() {
 
