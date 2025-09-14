@@ -23,7 +23,8 @@ import {
   ITEM_LIST_TAB_IDS,
   ACTION_SELECT,
   ACTION_TEXT,
-  ACTION_IMAGE
+  ACTION_IMAGE,
+  CURSOR_STATES
 } from './constants';
 import LoadingBar from './ui/loading-bar';
 import ItemSelector from './ui/item-selector';
@@ -229,13 +230,25 @@ class App {
       this.focusedItem = this.itemSelector.getFocusedItem( this.itemManager, this.mouse, this.camera);
       if(this.focusedItem) {
         this.focusedItem.textureMaterial.opacity = 0.5;
+        this._setCursor(CURSOR_STATES.POINTER);
       }
       else {
         this.itemManager.getItems().forEach(item => {
           item.textureMaterial.opacity = 1.0;
         });
+        this._setCursor(CURSOR_STATES.AUTO);
       }
       /* Add select logic. */
+    }
+  }
+
+  _onPointerClick(event) {
+    if(event.target.id === 'render-area'){
+      if(this.currentState === STATES.SELECT){
+        if(this.focusedItem) {
+          this._editItem(this.focusedItem);
+        }
+      }
     }
   }
 
@@ -460,7 +473,16 @@ class App {
     this.itemsTabContainer = new ItemsTabContainer();
 
     this.itemsTabContainer.onItemEdit((item) => {
-      const itemType = item.getType();
+      this._editItem(item);
+    });
+
+    this.itemsTabContainer.onItemDelete((item) => {
+      this._tabDeleteItem(item);
+    });
+  }
+
+  _editItem(item) {
+    const itemType = item.getType();
       switch(itemType) {
         case ITEM_TEXT:
           this._tabEditItem(item, STATES.TEXT_EDIT, this.textItemEditor);
@@ -471,13 +493,8 @@ class App {
         default:
           break;
       }
-      this.actionsMenu.updateMenuItemStatus(this.currentState);
-      this.windowOpen = true;
-    });
-
-    this.itemsTabContainer.onItemDelete((item) => {
-      this._tabDeleteItem(item);
-    });
+    this.actionsMenu.updateMenuItemStatus(this.currentState);
+    this.windowOpen = true;
   }
 
   _tabEditItem(item, newState, editor) {
@@ -541,6 +558,7 @@ class App {
     window.addEventListener('pointerdown', this._onPointerDown.bind(this));
     window.addEventListener('pointerup', this._onPointerUp.bind(this));
     window.addEventListener('pointermove', this._onPointerMove.bind(this));
+    window.addEventListener('click', this._onPointerClick.bind(this));
   }
 
   _initializeControlListener() {
@@ -549,6 +567,10 @@ class App {
 
   _controlsAction() {
     this.moved = true;
+  }
+
+  _setCursor(cursor) {
+    document.body.style.cursor = cursor;
   }
 }
 

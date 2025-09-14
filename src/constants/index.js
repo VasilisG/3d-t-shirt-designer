@@ -155,3 +155,9 @@ export const STATES = Object.freeze({
   IMAGE_EDIT: Symbol('image-edit'),
   COLOR_EDIT: Symbol('color-edit')
 });
+
+/* Cursor states. */
+export const CURSOR_STATES = Object.freeze({
+  AUTO: 'auto',
+  POINTER: 'pointer',
+});
