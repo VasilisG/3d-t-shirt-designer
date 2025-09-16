@@ -24,10 +24,12 @@ import {
   ACTION_SELECT,
   ACTION_TEXT,
   ACTION_IMAGE,
-  CURSOR_STATES
+  CURSOR_STATES,
+  ACTION_EXPORT
 } from './constants';
 import LoadingBar from './ui/loading-bar';
 import ItemSelector from './ui/item-selector';
+import ModelExporter from './ui/model-exporter';
 
 class App {
 
@@ -58,6 +60,7 @@ class App {
   textItemEditor = null;
   imageItemEditor = null;
   itemsTabContainer = null;
+  modelExporter = null;
 
   /* Loading bar UI elements. */
   loadingBar = new LoadingBar();
@@ -103,6 +106,7 @@ class App {
     this._initializeTextItemEditor();
     this._initializeImageItemEditor();
     this._initializeItemsTabContainer();
+    this._initializeModelExporter();
     this._initializeActionsMenu();
     this._initializeListeners();
     
@@ -511,6 +515,29 @@ class App {
     this.itemsTabContainer.updateTabItems(this.itemManager.getItems());
   }
 
+  _initializeModelExporter() {
+    this.modelExporter = new ModelExporter();
+
+    this.modelExporter.onDialogSuccess(() => {
+      this.modelExporter.exportScene(this.scene);
+      this._backToSelect();
+    });
+
+    this.modelExporter.onDialogClose(() => {
+      this._backToSelect();
+    });
+
+    this.modelExporter.onDialogCancel(() => {
+      this._backToSelect();
+    });
+  }
+
+  _backToSelect() {
+    this.currentState = STATES.SELECT;
+    this.actionsMenu.updateMenuItemStatus(this.currentState);
+    this.windowOpen = false;
+  }
+
   _initializeActionsMenu() {
     this.actionsMenu = new ActionMenu();
 
@@ -533,9 +560,18 @@ class App {
       }
     });
 
+    const exportAction = new Action(ACTION_EXPORT, [STATES.EXPORT]);
+    exportAction.onClick(() => {
+      this.modelExporter.open();
+      this.windowOpen = true;
+      this.currentState = STATES.EXPORT;
+      this.actionsMenu.updateMenuItemStatus(this.currentState);
+    });
+
     this.actionsMenu.addAction(selectAction);
     this.actionsMenu.addAction(addTextAction);
     this.actionsMenu.addAction(addImageAction);
+    this.actionsMenu.addAction(exportAction);
     this.actionsMenu.updateMenuItemStatus(this.currentState);
   }
 

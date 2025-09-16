@@ -17,6 +17,7 @@
                     <li class="action-item" id="action-color" title="Change T-Shirt Color"><img class="action-icon color-icon" src="/assets/icons/color.svg" alt="Color"/></li>
                     <li class="action-item" id="action-text" title="Add Text Item"><img class="action-icon add-text-icon" src="/assets/icons/text.svg" alt="Add Text"/></li>
                     <li class="action-item" id="action-image" title="Add Image Item"><img class="action-icon add-image-icon" src="/assets/icons/image.svg" alt="Add Image"/></li>
+                    <li class="action-item" id="action-export" title="Export Design"><img class="action-icon export-icon" src="/assets/icons/export.svg" alt="Export"/></li>
                 </ul>
             </div>
 
@@ -199,6 +200,27 @@
                     <div class="action-buttons-container">
                         <button type="button" class="action-button submit-button" id="image-item-submit-button">OK</button>
                         <button type="button" class="action-button cancel-button" id="image-item-cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Model exporter -->
+             <div id="model-exporter-editor" class="model-exporter-container popup-container">
+                <div class="close-action-container">
+                    <span class="popup-title">Model Exporter</span>
+                    <span class="close-button" id="model-exporter-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
+                </div>
+                <div class="model-exporter-options item-options">
+                    <div class="model-exporter-option item-option text-option">
+                        <label class="option-label" for="filename-field">File Name</label>
+                        <input type="text" class="text-field" id="filename-field" required></input>
+                        <span class="error-message" id="filename-error-message">Filename can contain only letters, numbers, hyphens, dots, and underscores.</span>
+                    </div>
+                </div>
+                <form class="model-exporter-form model-exporter-form">
+                    <div class="action-buttons-container">
+                        <button type="button" class="action-button submit-button" id="model-exporter-submit-button">Export</button>
+                        <button type="button" class="action-button cancel-button" id="model-exporter-cancel-button">Cancel</button>
                     </div>
                 </form>
             </div>

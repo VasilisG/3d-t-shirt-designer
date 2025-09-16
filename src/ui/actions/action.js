@@ -6,7 +6,7 @@ class Action {
    * Create an action
    * @constructor
    * @param {string} actionElementId - The DOM element ID for this action
-   * @param {Array} state - The state associated with this action
+   * @param {Array} states - The state associated with this actions
    * @throws {Error} If element with provided ID is not found
    */
   constructor(actionElementId, states) {

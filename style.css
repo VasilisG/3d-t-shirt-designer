@@ -443,3 +443,22 @@ progress::-moz-progress-value {
   opacity: 1;
   z-index: 999;
 }
+.model-exporter-options.item-options {
+  max-height: 150px;
+  overflow: unset;
+}
+.model-exporter-option.item-option.text-option {
+  align-items: center;
+}
+#filename-field {
+  min-width: 300px !important;
+}
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 5px;
+}
+.error-message.visible {
+  display: block;
+}

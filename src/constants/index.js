@@ -144,6 +144,7 @@ export const ITEM_LIST_TAB_IDS = [
 export const ACTION_SELECT = 'action-select';
 export const ACTION_TEXT = 'action-text';
 export const ACTION_IMAGE = 'action-image';
+export const ACTION_EXPORT = 'action-export';
 
 /* App states. */
 export const STATES = Object.freeze({
@@ -153,7 +154,8 @@ export const STATES = Object.freeze({
   TEXT_EDIT: Symbol('text-edit'),
   IMAGE_CREATE: Symbol('image-insert'),
   IMAGE_EDIT: Symbol('image-edit'),
-  COLOR_EDIT: Symbol('color-edit')
+  COLOR_EDIT: Symbol('color-edit'),
+  EXPORT: Symbol('export')
 });
 
 /* Cursor states. */

@@ -129,7 +129,9 @@ class AbstractItemEditor {
   }
 
   _updatePreview() {
-    this.canvasRenderer.draw(this.options);
+    if(this.canvasRenderer !== null) {
+      this.canvasRenderer.draw(this.options);
+    }
   }
 
   _reset() {
