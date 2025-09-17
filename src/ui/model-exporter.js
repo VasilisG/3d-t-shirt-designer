@@ -1,7 +1,7 @@
 import { OBJExporter } from "three/examples/jsm/Addons.js";
 import AbstractItemEditor from "./item-editors/abstract-item-editor";
 
-class ModelExporter extends AbstractItemEditor{
+class ModelExporter extends AbstractItemEditor {
 
   constructor() {
     super();
@@ -54,7 +54,7 @@ class ModelExporter extends AbstractItemEditor{
   }
 
 	_saveString(text) {
-    this.save(new Blob([ text ],{ type: 'text/plain' } ), this._getObjFilename());
+    this._save(new Blob([ text ],{ type: 'text/plain' } ), this._getObjFilename());
   }
 
   _getObjFilename() {
