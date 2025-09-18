@@ -1,4 +1,4 @@
-import { OBJExporter } from "three/examples/jsm/Addons.js";
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import AbstractItemEditor from "./item-editors/abstract-item-editor";
 
 class ModelExporter extends AbstractItemEditor {
@@ -9,7 +9,7 @@ class ModelExporter extends AbstractItemEditor {
     this.selector = 'model-exporter';
     this.editor = document.getElementById(`${this.selector}-editor`);
     this.errorMessage = document.getElementById('filename-error-message');
-    this.objExporter = new OBJExporter();
+    this.gltfExporter = new GLTFExporter();
     this._initializeFormListeners();
   }
 
@@ -39,26 +39,32 @@ class ModelExporter extends AbstractItemEditor {
   }
 
   exportScene(scene) {
-		const result = this.objExporter.parse(scene);
-		this._saveString(result);
+    this.gltfExporter.parse(scene, (result) => {
+      const output = JSON.stringify(result, null, 2);
+      this._saveString(output);
+    });
+
     /* Export logic here. */
     /* https://threejs.org/examples/#misc_exporter_obj */
     /* https://github.com/mrdoob/three.js/blob/master/examples/misc_exporter_obj.html#L218 */
+
+    /* GTLF export alternative */
+    /* https://github.com/mrdoob/three.js/blob/master/examples/misc_exporter_gltf.html */
   }
 
   _save(blob) {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = this._getObjFilename();
+    link.download = this._getFilename();
     link.click();
   }
 
 	_saveString(text) {
-    this._save(new Blob([ text ],{ type: 'text/plain' } ), this._getObjFilename());
+    this._save(new Blob([ text ],{ type: 'text/plain' } ), this._getFilename());
   }
 
-  _getObjFilename() {
-    return `${this.filename.trim()}.obj`;
+  _getFilename() {
+    return `${this.filename.trim()}.gltf`;
   }
 
   _isValidFilename() {

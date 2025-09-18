@@ -132,21 +132,22 @@ class App {
     if(showLight) {
 
       /* Adding scene light. */
-      const sceneLight = new THREE.HemisphereLight(color, color, intensity);
-      this.scene.add(sceneLight);
+      // const sceneLight = new THREE.HemisphereLight(color, color, intensity);
+      // this.scene.add(sceneLight);
       /* Adding scene light end. */
 
-      /* Adding ambient light. */
-      const ambientLight = new THREE.AmbientLight(color, intensity);
-      this.camera.add(ambientLight);
-      /* Adding ambient light end. */
-
       /* Adding directional light. */
-      const directionalLight = new THREE.DirectionalLight(color, intensity);
-      directionalLight.position.set(0.5, 0, 0.866);
+      const directionalLight = new THREE.DirectionalLight(color, 1.2);
+      // directionalLight.position.set(0.5, 0, 0.866);
+      directionalLight.position.set(5, 10, 7.5);
       directionalLight.castShadow = true;
       this.camera.add(directionalLight);
       /* Adding directional light end. */
+
+      /* Adding ambient light. */
+      const ambientLight = new THREE.AmbientLight(color, 1.5);
+      this.camera.add(ambientLight);
+      /* Adding ambient light end. */
     }  
   }
 
@@ -170,19 +171,24 @@ class App {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1;
+    THREE.ColorManagement.legacyMode = false;
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    // this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMapping = THREE.NoToneMapping;
+    // this.renderer.toneMappingExposure = 1.0;
+    // this.renderer.physicallyCorrectLights = true;
 
     // this.renderer.setClearColor(0xC0C0C0);
 
     /* Initialize scene. */
-    const environment = new RoomEnvironment(this.renderer);
-    const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+    // const environment = new RoomEnvironment(this.renderer);
+    // const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x333333);
-    this.scene.environment = pmremGenerator.fromScene(environment).texture;
-    environment.dispose();
+    // this.scene.environment = pmremGenerator.fromScene(environment).texture;
+    this.scene.environment = null;
+    // environment.dispose();
     /* Scene initialization ends. */
 
     /* Initialize camera. */
@@ -359,9 +365,12 @@ class App {
 
           if (child.material) {
             // Reduce lighting impact while keeping some shading.
+            child.material.colorSpace = THREE.SRGBColorSpace;
+            child.material.color = new THREE.Color(0xffffff);
             child.material.roughness = 1.0; 
             child.material.metalness = 0.0;
             child.material.envMapIntensity = 0.2;
+            child.material.needsUpdate = true;
           }
         }
       });

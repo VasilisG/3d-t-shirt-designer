@@ -93,11 +93,16 @@ class Item {
     );
   
     this._texture = new THREE.CanvasTexture(this._canvas);
+    this._texture.colorSpace = THREE.SRGBColorSpace;
+    this._texture.magFilter = THREE.NearestFilter;
+    this._texture.minFilter = THREE.NearestFilter;
+    this._texture.generateMipmaps = false;
+    this._texture.needsUpdate = true;
     this._texture.center.set(0.5, 0.5);
   }
 
   _createTextureMaterial(preview) {
-    this._textureMaterial = new THREE.MeshBasicMaterial({
+    this._textureMaterial = new THREE.MeshStandardMaterial({
       map: this.texture,
       transparent: true,
       opacity: preview ? 0.5 : 1,
@@ -106,7 +111,8 @@ class Item {
       polygonOffset: true,
       polygonOffsetFactor: -4,
       side: THREE.FrontSide,
-      alphaTest: 0.1  
+      alphaTest: 0.1,
+      envMap: null
     });
   }
 
