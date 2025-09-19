@@ -1,4 +1,4 @@
-import { ITEM_IMAGE, ITEM_TEXT, SCALE_FACTOR } from "../constants";
+import { ITEM_IMAGE, ITEM_TEXT, MAX_HEIGHT, MAX_WIDTH, SCALE_FACTOR } from "../constants";
 import ColorInvertFilter from "../filters/colorInvertFilter";
 import GrayscaleFilter from "../filters/grayscaleFilter";
 import HueFilter from "../filters/hueFilter";
@@ -122,7 +122,7 @@ class CanvasRenderer {
    * @param {Object} options - The image drawing options
    */
   _drawImage(options) {
-    this.ctx.drawImage(options.image, 0, 0, options.image.width * SCALE_FACTOR, options.image.height * SCALE_FACTOR);
+    this.ctx.drawImage(options.image, 0, 0, options.image.width, options.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.save();
   }
 
@@ -202,8 +202,10 @@ class CanvasRenderer {
    * @param {Object} options - The image drawing options
    */
   _setupCanvasForImage(options) {
-    this.ctx.canvas.width = options.image.width * SCALE_FACTOR;
-    this.ctx.canvas.height = options.image.height * SCALE_FACTOR;
+    const scaleFactor = Math.min(1, Math.min(MAX_WIDTH / options.image.width, MAX_HEIGHT / options.image.height));
+
+    this.ctx.canvas.width = options.image.width * scaleFactor;
+    this.ctx.canvas.height = options.image.height * scaleFactor;
   }
 
   /**

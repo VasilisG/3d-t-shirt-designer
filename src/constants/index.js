@@ -1,5 +1,7 @@
 export const PIXELS_PER_UNIT = 1024;
 export const SCALE_FACTOR = 1;
+export const MAX_WIDTH = 256;
+export const MAX_HEIGHT = 256;
 
 /* Item types. */
 export const ITEM_TEXT = 'item-text';
