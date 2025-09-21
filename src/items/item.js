@@ -3,7 +3,7 @@ import { generateUUID } from "three/src/math/MathUtils.js";
 import { DecalGeometry } from 'three/addons/geometries/DecalGeometry.js';
 import CanvasRenderer from '../helpers/canvasRenderer';
 import pxToWorldUnits from '../utils/pxToWorldUnits';
-import { ITEM_IMAGE, ITEM_TEXT } from '../constants';
+import { ITEM_IMAGE, ITEM_TEXT, MODE_CREATE, MODE_UPDATE } from '../constants';
 
 class Item {
 
@@ -17,6 +17,7 @@ class Item {
 
     this._intersection = intersection;
     this._size = new THREE.Vector3();
+    this._position = new THREE.Vector3();
     this._options = options;
     this._type = type;
 
@@ -116,10 +117,15 @@ class Item {
     });
   }
 
-  _createTextureGeometry(intersection) {
+  _createTextureGeometry(options = null, intersection) {
+
+    if(options === null || options.mode === MODE_CREATE){
+      this._position.copy(intersection.point);
+    }
+
     this._textureGeometry = new DecalGeometry(
       intersection.object,
-      intersection.point,
+      this._position,
       intersection.normal,
       this._size
     );
@@ -128,7 +134,7 @@ class Item {
   _createTextureMesh(intersection, options, preview) {
     this._createCanvasTexture(options);
     this._createTextureMaterial(preview);
-    this._createTextureGeometry(intersection);
+    this._createTextureGeometry(options, intersection);
     this._textureMesh = new THREE.Mesh(
       this._textureGeometry,
       this._textureMaterial
@@ -140,14 +146,14 @@ class Item {
     this._createCanvasTexture(options);
     this._createTextureMaterial(false);
     this._textureGeometry.dispose();
-    this._createTextureGeometry(this._intersection);
+    this._createTextureGeometry(options, this._intersection);
     this._textureMesh.geometry = this._textureGeometry;
     this._textureMesh.material = this._textureMaterial;
   }
 
   updatePosition(intersection) {
     this._textureGeometry.dispose();
-    this._createTextureGeometry(intersection);
+    this._createTextureGeometry(null, intersection);
     this._textureMesh.geometry = this._textureGeometry;
   }
 }

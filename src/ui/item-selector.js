@@ -10,9 +10,9 @@ class ItemSelector {
 
   getFocusedItem(itemManager, pointer, camera) {
     this.focusedItem = null;
-    this.raycaster.setFromCamera( pointer, camera );
+    this.raycaster.setFromCamera(pointer, camera);
     for(let item of itemManager.getItems()) {
-      let intersects = this.raycaster.intersectObject( item.textureMesh, false );
+      let intersects = this.raycaster.intersectObject(item.textureMesh, false);
       if(intersects.length > 0) {
         this.focusedItem = item;
         break;

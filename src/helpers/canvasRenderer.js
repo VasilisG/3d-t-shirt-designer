@@ -31,8 +31,8 @@ class CanvasRenderer {
     this.filters = [];
 
     if(type === ITEM_IMAGE){
-      this._initializeTransforms();
-      this._initializeFilters();
+      this._initializeImageTransforms();
+      this._initializeImageFilters();
     }
   }
 
@@ -40,7 +40,7 @@ class CanvasRenderer {
    * Initialize available transforms for image items
    * @private
    */
-  _initializeTransforms() {
+  _initializeImageTransforms() {
     this.transforms = {
       flip: new FlipTransform()
     };
@@ -50,7 +50,7 @@ class CanvasRenderer {
    * Initialize available filters for image items
    * @private
    */
-  _initializeFilters() {
+  _initializeImageFilters() {
     this.filters = {
       colorInvert: new ColorInvertFilter(),
       grayscale: new GrayscaleFilter(),

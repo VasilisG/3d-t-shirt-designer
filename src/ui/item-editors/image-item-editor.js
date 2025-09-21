@@ -54,7 +54,8 @@ class ImageItemEditor extends AbstractItemEditor {
         saturation: this.item !== null ? this.item.options.filters.saturation : DEFAULT_SATURATION,
         brightness: this.item !== null ? this.item.options.filters.brightness : DEFAULT_BRIGHTNESS,
         contrast: this.item !== null ? this.item.options.filters.contrast : DEFAULT_CONTRAST
-      }
+      },
+      mode: this.getMode()
     }
   }
 
@@ -85,7 +86,8 @@ class ImageItemEditor extends AbstractItemEditor {
         saturation: DEFAULT_SATURATION,
         brightness: DEFAULT_BRIGHTNESS,
         contrast: DEFAULT_CONTRAST
-      }
+      },
+      mode: MODE_CREATE
     }
     this.mode = MODE_CREATE;
   }

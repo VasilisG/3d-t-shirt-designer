@@ -60,7 +60,8 @@ class TextItemEditor extends AbstractItemEditor {
       borderColor: this.item !== null ? this.item.options.borderColor : DEFAULT_BORDER_COLOR,
       borderWidth: this.item !== null ? this.item.options.borderWidth : DEFAULT_BORDER_WIDTH,
       paddingX: this.item !== null ? this.item.options.paddingX : DEFAULT_PADDING_HORIZONTAL,
-      paddingY: this.item !== null ? this.item.options.paddingY : DEFAULT_PADDING_VERTICAL
+      paddingY: this.item !== null ? this.item.options.paddingY : DEFAULT_PADDING_VERTICAL,
+      mode: this.getMode()
     }
   }
 
@@ -298,7 +299,8 @@ class TextItemEditor extends AbstractItemEditor {
       borderColor: DEFAULT_BORDER_COLOR,
       borderWidth: DEFAULT_BORDER_WIDTH,
       paddingX: DEFAULT_PADDING_HORIZONTAL,
-      paddingY: DEFAULT_PADDING_VERTICAL
+      paddingY: DEFAULT_PADDING_VERTICAL,
+      mode: MODE_CREATE
     }
     this.mode = MODE_CREATE;
   }
