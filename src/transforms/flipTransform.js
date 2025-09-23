@@ -1,10 +1,10 @@
+import { SCALE_FACTOR } from "../constants";
 import AbstractTransform from "./abstractTransform";
 
 class FlipTransform extends AbstractTransform {
 
   apply(ctx, options) {
-    if(options && options.image && options.transforms.flip) {
-      const { image } = options;
+    if(options && options.transforms.flip) {
       const horizontalFlip = options.transforms.flip.x ? -1 : 1;
       const verticalFlip = options.transforms.flip.y ? -1 : 1;
 
@@ -16,7 +16,24 @@ class FlipTransform extends AbstractTransform {
       ctx.save();
       ctx.scale(horizontalFlip, verticalFlip);
 
-      ctx.drawImage(image, 0, 0, image.width, image.height, startX, startY, ctx.canvas.width, ctx.canvas.height);
+      if(options.text) {
+        const { text, fontSize, fontWeight, fontStyle, fontFamily, textColor } = options;
+        ctx.font = `${fontStyle} ${fontWeight} ${fontSize * SCALE_FACTOR}px ${fontFamily}`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = textColor;
+        ctx.fillText(
+          text, 
+          (ctx.canvas.width * horizontalFlip) / 2, 
+          (ctx.canvas.height * verticalFlip) / 2
+        );
+      }
+
+      if(options.image) {
+        const { image } = options;
+        ctx.drawImage(image, 0, 0, image.width, image.height, startX, startY, ctx.canvas.width, ctx.canvas.height);
+      }
+
       ctx.restore();
     }
   }

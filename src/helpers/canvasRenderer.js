@@ -30,17 +30,15 @@ class CanvasRenderer {
     this.transforms = [];
     this.filters = [];
 
-    if(type === ITEM_IMAGE){
-      this._initializeImageTransforms();
-      this._initializeImageFilters();
-    }
+    this._initializeTransforms();
+    this._initializeFilters();
   }
 
   /**
    * Initialize available transforms for image items
    * @private
    */
-  _initializeImageTransforms() {
+  _initializeTransforms() {
     this.transforms = {
       flip: new FlipTransform()
     };
@@ -50,7 +48,7 @@ class CanvasRenderer {
    * Initialize available filters for image items
    * @private
    */
-  _initializeImageFilters() {
+  _initializeFilters() {
     this.filters = {
       colorInvert: new ColorInvertFilter(),
       grayscale: new GrayscaleFilter(),
@@ -90,7 +88,9 @@ class CanvasRenderer {
     if(options.image){
       this._drawImageItem(options);
     }
-    else this._drawTextItem(options);
+    else {
+      this._drawTextItem(options);
+    }
   }
 
   /**
@@ -103,6 +103,7 @@ class CanvasRenderer {
     this._drawBackground(options);
     this._drawText(options);
     this._drawBorder(options);
+    this._applyTransforms(options);
   }
 
   /**

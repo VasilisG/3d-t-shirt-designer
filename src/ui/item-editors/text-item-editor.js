@@ -19,7 +19,9 @@ import {
   FONT_STYLES,
   DEFAULT_PADDING_HORIZONTAL,
   DEFAULT_PADDING_VERTICAL,
-  TEXT_FONTS
+  TEXT_FONTS,
+  DEFAULT_HORIZONTAL_FLIP,
+  DEFAULT_VERTICAL_FLIP
 } from '../../constants';
 import AbstractItemEditor from './abstract-item-editor';
 
@@ -38,6 +40,7 @@ class TextItemEditor extends AbstractItemEditor {
     this.previewCanvas = document.getElementById(`${this.selector}-preview-canvas`);
     this.canvasRenderer = new CanvasRenderer(this.previewCanvas);
 
+    this._updateOptions();
     this._initializeFormListeners();
     this._updateSubmitButton(); 
   }
@@ -61,6 +64,12 @@ class TextItemEditor extends AbstractItemEditor {
       borderWidth: this.item !== null ? this.item.options.borderWidth : DEFAULT_BORDER_WIDTH,
       paddingX: this.item !== null ? this.item.options.paddingX : DEFAULT_PADDING_HORIZONTAL,
       paddingY: this.item !== null ? this.item.options.paddingY : DEFAULT_PADDING_VERTICAL,
+      transforms: {
+        flip: {
+          x: this.item !== null ? this.item.options.transforms.flip.x : DEFAULT_HORIZONTAL_FLIP,
+          y: this.item !== null ? this.item.options.transforms.flip.y : DEFAULT_VERTICAL_FLIP
+        }
+      },
       mode: this.getMode()
     }
   }
@@ -76,6 +85,9 @@ class TextItemEditor extends AbstractItemEditor {
     document.getElementById('horizontal-padding-field').value = this.options.paddingX;
     document.getElementById('vertical-padding-field').value = this.options.paddingY;
 
+    this._setControlInputValue('text-horizontal-flip', this.options.transforms.flip.x);
+    this._setControlInputValue('text-vertical-flip', this.options.transforms.flip.y);
+
     this.textColorPicker.setColor(this.options.textColor);
     this.backgroundColorPicker.setColor(this.options.backgroundColor);
     this.borderColorPicker.setColor(this.options.borderColor);
@@ -87,10 +99,25 @@ class TextItemEditor extends AbstractItemEditor {
     this._initializeContentInputListener();
     this._initializeDropdownListeners();
     this._initializeControlInputListeners();
+    this._initializeCheckBoxListeners();
 
     this.textColorPicker = this._initializeColorPicker('text-color');
     this.backgroundColorPicker = this._initializeColorPicker('background-color');
     this.borderColorPicker = this._initializeColorPicker('border-color');
+  }
+
+  _initializeCheckBoxListeners() {
+    this._initializeCheckboxListener('text-horizontal-flip');
+    this._initializeCheckboxListener('text-vertical-flip');
+  }
+
+  _initializeCheckboxListener(selector) {
+    const checkbox = document.getElementById(`${selector}-field`);
+    checkbox.value = this._getControlInputValue(selector);
+    checkbox.addEventListener('change', (e) => {
+      this._setControlInputValue(selector, e.target.checked);
+      this._updatePreview();
+    });
   }
 
   _initializeColorPickers() {
@@ -238,6 +265,10 @@ class TextItemEditor extends AbstractItemEditor {
 
   _getControlInputValue(type) {
     switch(type) {
+      case 'text-horizontal-flip':
+        return this.options.transforms.flip.x;
+      case 'text-vertical-flip':
+        return this.options.transforms.flip.y;
       case 'font-family':
         return this.options.fontFamily;
       case 'font-size':
@@ -259,6 +290,12 @@ class TextItemEditor extends AbstractItemEditor {
 
   _setControlInputValue(type, value) {
     switch(type){
+      case 'text-horizontal-flip':
+        this.options.transforms.flip.x = value;
+        break;
+      case 'text-vertical-flip':
+        this.options.transforms.flip.y = value;
+        break;
       case 'font-family':
         this.options.fontFamily = value;
         break;
@@ -300,7 +337,13 @@ class TextItemEditor extends AbstractItemEditor {
       borderWidth: DEFAULT_BORDER_WIDTH,
       paddingX: DEFAULT_PADDING_HORIZONTAL,
       paddingY: DEFAULT_PADDING_VERTICAL,
-      mode: MODE_CREATE
+      mode: MODE_CREATE,
+      transforms: {
+        flip: {
+          x: DEFAULT_HORIZONTAL_FLIP,
+          y: DEFAULT_VERTICAL_FLIP
+        }
+      }
     }
     this.mode = MODE_CREATE;
   }
