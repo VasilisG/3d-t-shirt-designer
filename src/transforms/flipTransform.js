@@ -17,8 +17,13 @@ class FlipTransform extends AbstractTransform {
       ctx.scale(horizontalFlip, verticalFlip);
 
       if(options.text) {
-        const { text, fontSize, fontWeight, fontStyle, fontFamily, textColor } = options;
+        const { text, fontSize, fontWeight, fontStyle, fontFamily, textColor, backgroundColor, borderColor, borderWidth } = options;
+
         ctx.font = `${fontStyle} ${fontWeight} ${fontSize * SCALE_FACTOR}px ${fontFamily}`;
+
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = textColor;
@@ -27,6 +32,12 @@ class FlipTransform extends AbstractTransform {
           (ctx.canvas.width * horizontalFlip) / 2, 
           (ctx.canvas.height * verticalFlip) / 2
         );
+
+        if(borderWidth > 0){
+          ctx.strokeStyle = borderColor;
+          ctx.lineWidth = borderWidth;
+          ctx.strokeRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        }
       }
 
       if(options.image) {
