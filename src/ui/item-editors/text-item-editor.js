@@ -175,7 +175,7 @@ class TextItemEditor extends AbstractItemEditor {
   _initializeControlInputListeners() {
     this._initializeControlInputListener('font-size', 1, 100, DEFAULT_FONT_SIZE);
     this._initializeControlInputListener('rotation', 0, 360, DEFAULT_ROTATION);
-    this._initializeControlInputListener('stroke-width', 0, 100, DEFAULT_STROKE_WIDTH);
+    this._initializeControlInputListener('stroke-width', 0, 10, DEFAULT_STROKE_WIDTH);
     this._initializeControlInputListener('border-width', 0, 100, DEFAULT_BORDER_WIDTH);
     this._initializeControlInputListener('horizontal-padding', 0, 100, DEFAULT_PADDING_HORIZONTAL);
     this._initializeControlInputListener('vertical-padding', 0, 100, DEFAULT_PADDING_VERTICAL);
