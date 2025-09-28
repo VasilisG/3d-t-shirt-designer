@@ -31,6 +31,10 @@ import LoadingBar from './ui/loading-bar';
 import ItemSelector from './ui/item-selector';
 import ModelExporter from './ui/model-exporter';
 
+/**
+ * Main application class for 3D T-Shirt Designer
+ * Manages the 3D scene, UI components, and item interactions
+ */
 class App {
 
   /* App state variables. */
@@ -85,10 +89,18 @@ class App {
   item = null;
   focusedItem = null;
 
+  /**
+   * Creates a new App instance and initializes the application
+   */
   constructor() {
     this._init();
   }
 
+  /**
+   * Initializes the application components and loads resources
+   * @private
+   * @async
+   */
   async _init() {
 
     /* Show Loading bar. */
@@ -117,10 +129,18 @@ class App {
     this.loadingBar.hide();
   }
 
+  /**
+   * Initializes the THREE.js scene
+   * @private
+   */
   _initializeScene() {
     this.scene = new THREE.Scene();
   }
 
+  /**
+   * Initializes the camera with perspective projection
+   * @private
+   */
   _initializeCamera() {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
     this.camera.position.set(0, 0, 1);
@@ -128,6 +148,13 @@ class App {
     this.scene.add(this.camera);
   }
 
+  /**
+   * Initializes scene lighting
+   * @param {boolean} showLight - Whether to show lighting
+   * @param {number} color - Light color in hex format
+   * @param {number} intensity - Light intensity
+   * @private
+   */
   _initializeLighting(showLight, color, intensity) {
     if(showLight) {
 
@@ -151,6 +178,10 @@ class App {
     }  
   }
 
+  /**
+   * Initializes orbit controls for camera manipulation
+   * @private
+   */
   _initializeControls() {
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.target.set(0, 0, 0);
@@ -159,6 +190,12 @@ class App {
     this.controls.update();
   }
 
+  /**
+   * Shows or hides the axes helper in the scene
+   * @param {boolean} show - Whether to show the axes helper
+   * @param {number} size - Size of the axes helper
+   * @private
+   */
   _showAxesHelper(show, size) {
     if(show) {
       const axesHelper = new THREE.AxesHelper(size);
@@ -166,6 +203,10 @@ class App {
     }
   }
 
+  /**
+   * Initializes the WebGL renderer and sets up the rendering environment
+   * @private
+   */
   _initializeRenderer() {
     this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: this.canvas });
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
@@ -201,16 +242,29 @@ class App {
     this.renderer.setAnimationLoop(() => this._animate());
   }
 
+  /**
+   * Animation loop callback for rendering the scene
+   * @private
+   */
   _animate() {
     this.renderer.render(this.scene, this.camera);
   }
 
+  /**
+   * Handles window resize events
+   * @private
+   */
   _resize() {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
   }
 
+  /**
+   * Handles pointer up events
+   * @param {PointerEvent} event - The pointer event
+   * @private
+   */
   _onPointerUp(event) {
     if (this.moved === false) {
       if(this.currentState === STATES.PLACE){
@@ -224,10 +278,19 @@ class App {
     }
   }
 
+  /**
+   * Handles pointer down events
+   * @private
+   */
   _onPointerDown() {
     this.moved = false;
   }
 
+  /**
+   * Handles pointer move events for item placement and selection
+   * @param {PointerEvent} event - The pointer event
+   * @private
+   */
   _onPointerMove(event) {
     if(this.currentState === STATES.PLACE){
       if (event.isPrimary) {
@@ -252,6 +315,11 @@ class App {
     }
   }
 
+  /**
+   * Handles pointer click events
+   * @param {PointerEvent} event - The pointer event
+   * @private
+   */
   _onPointerClick(event) {
     if(event.target.id === 'render-area'){
       if(this.currentState === STATES.SELECT){
@@ -262,10 +330,18 @@ class App {
     }
   }
 
+  /**
+   * Initializes the raycaster for 3D object intersection testing
+   * @private
+   */
   _initializeRaycaster() {
     this.raycaster = new THREE.Raycaster();
   }
 
+  /**
+   * Initializes line geometry for visual helpers
+   * @private
+   */
   _initializeLineGeometry() {
     const lineGeometry = new THREE.BufferGeometry();
     lineGeometry.setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
@@ -273,12 +349,21 @@ class App {
     // this.scene.add(this.line);
   }
 
+  /**
+   * Updates the preview item position based on intersection
+   * @param {Object} intersection - The intersection data
+   */
   updatePreviewTextItem(intersection) {
     if(this.item !== null) {
       this.item.updatePosition(intersection);
     }
   }
 
+  /**
+   * Checks for intersection between mouse pointer and 3D model
+   * @param {number} x - The x coordinate
+   * @param {number} y - The y coordinate
+   */
   checkIntersection(x, y) {
 
     if (this.model3DMesh === undefined) return;
@@ -320,6 +405,9 @@ class App {
     }
   }
 
+  /**
+   * Places the current item on the 3D model
+   */
   placeItem() {
     if(this.item !== null) {
       this.item.textureMaterial.opacity = 1;
@@ -330,6 +418,11 @@ class App {
   }
 }
 
+  /**
+   * Loads all required fonts with progress tracking
+   * @private
+   * @async
+   */
   async _loadFonts() {
     const fontLoader = new FontLoader();
     const availableFonts = fontLoader.getAvailableFonts();
@@ -349,6 +442,12 @@ class App {
     await fontLoader.loadFonts();
   }
 
+  /**
+   * Loads the 3D model with progress tracking
+   * @param {string} path - Path to the 3D model file
+   * @private
+   * @async
+   */
   async _load3DModel(path) {
 
     /* Update loading bar. */
@@ -384,6 +483,10 @@ class App {
     });
   }
 
+  /**
+   * Initializes the text item editor with event callbacks
+   * @private
+   */
   _initializeTextItemEditor() {
     this.textItemEditor = new TextItemEditor();
     this.textItemEditor.onDialogSuccess((options) => {
@@ -404,6 +507,11 @@ class App {
     });
   }
 
+  /**
+   * Creates a new text item with the provided options
+   * @param {Object} options - Text item options
+   * @private
+   */
   _createTextItem(options) {
     this.currentState = STATES.PLACE;
     this.item = new Item(this.intersection, options, true, ITEM_TEXT);
@@ -413,6 +521,11 @@ class App {
     this.itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[0]);
   }
 
+  /**
+   * Updates an existing text item with new options
+   * @param {Object} options - Updated text item options
+   * @private
+   */
   _updateTextItem(options) {
     this.currentState = STATES.SELECT;
     let itemId = this.textItemEditor.getItem().getId();
@@ -426,6 +539,10 @@ class App {
     this.actionsMenu.updateMenuItemStatus(this.currentState);
   }
 
+  /**
+   * Handles text item editor abort/cancel actions
+   * @private
+   */
   _textItemEditorAbortCallback() {
     this.currentState = STATES.SELECT;
     this.textItemEditor.setItem(null);
@@ -433,6 +550,10 @@ class App {
     this.windowOpen = false;
   }
 
+  /**
+   * Initializes the image item editor with event callbacks
+   * @private
+   */
   _initializeImageItemEditor() {
     this.imageItemEditor = new ImageItemEditor();
     this.imageItemEditor.onDialogSuccess((options) => {
@@ -453,6 +574,11 @@ class App {
     });
   }
 
+  /**
+   * Creates a new image item with the provided options
+   * @param {Object} options - Image item options
+   * @private
+   */
   _createImageItem(options) {
     this.currentState = STATES.PLACE;
     this.item = new Item(this.intersection, options, true, ITEM_IMAGE);
@@ -462,6 +588,11 @@ class App {
     this.itemsTabContainer.switchToTab(ITEM_LIST_TAB_IDS[1]);
   }
 
+  /**
+   * Updates an existing image item with new options
+   * @param {Object} options - Updated image item options
+   * @private
+   */
   _updateImageItem(options) {
     this.currentState = STATES.SELECT;
     let itemId = this.imageItemEditor.getItem().getId();
@@ -475,6 +606,10 @@ class App {
     this.actionsMenu.updateMenuItemStatus(this.currentState);
   }
 
+  /**
+   * Handles image item editor abort/cancel actions
+   * @private
+   */
   _imageItemEditorAbortCallback() {
     this.currentState = STATES.SELECT;
     this.imageItemEditor.setItem(null);
@@ -482,6 +617,10 @@ class App {
     this.windowOpen = false;
   }
 
+  /**
+   * Initializes the items tab container with event callbacks
+   * @private
+   */
   _initializeItemsTabContainer() {
     this.itemsTabContainer = new ItemsTabContainer();
 
@@ -494,6 +633,11 @@ class App {
     });
   }
 
+  /**
+   * Opens the appropriate editor for an item
+   * @param {Item} item - The item to edit
+   * @private
+   */
   _editItem(item) {
     const itemType = item.getType();
       switch(itemType) {
@@ -510,6 +654,13 @@ class App {
     this.windowOpen = true;
   }
 
+  /**
+   * Opens an item editor from the tabs interface
+   * @param {Item} item - The item to edit
+   * @param {string} newState - The new state for the editor
+   * @param {AbstractItemEditor} editor - The editor to use
+   * @private
+   */
   _tabEditItem(item, newState, editor) {
     this.currentState = newState;
     editor.setItem(item);
@@ -517,6 +668,11 @@ class App {
     this.actionsMenu.updateMenuItemStatus(this.currentState);
   }
 
+  /**
+   * Deletes an item from the tabs interface
+   * @param {Item} item - The item to delete
+   * @private
+   */
   _tabDeleteItem(item) {
     this.currentState = STATES.SELECT;
     this.scene.remove(item.textureMesh);
@@ -524,6 +680,10 @@ class App {
     this.itemsTabContainer.updateTabItems(this.itemManager.getItems());
   }
 
+  /**
+   * Initializes the model exporter with event callbacks
+   * @private
+   */
   _initializeModelExporter() {
     this.modelExporter = new ModelExporter();
 
@@ -541,12 +701,20 @@ class App {
     });
   }
 
+  /**
+   * Returns the application to the select state
+   * @private
+   */
   _backToSelect() {
     this.currentState = STATES.SELECT;
     this.actionsMenu.updateMenuItemStatus(this.currentState);
     this.windowOpen = false;
   }
 
+  /**
+   * Initializes the actions menu with all available actions
+   * @private
+   */
   _initializeActionsMenu() {
     this.actionsMenu = new ActionMenu();
 
@@ -584,6 +752,12 @@ class App {
     this.actionsMenu.updateMenuItemStatus(this.currentState);
   }
 
+  /**
+   * Opens an item editor and updates application state
+   * @param {AbstractItemEditor} editor - The editor to open
+   * @param {string} newState - The new application state
+   * @private
+   */
   _itemAction(editor, newState) {
     if(!this.windowOpen){
       this.currentState = newState;
@@ -593,11 +767,19 @@ class App {
     }
   }
 
+  /**
+   * Initializes all event listeners
+   * @private
+   */
   _initializeListeners() {
     this._initializeWindowListeners();
     this._initializeControlListener();
   }
 
+  /**
+   * Initializes window event listeners
+   * @private
+   */
   _initializeWindowListeners() {
     window.addEventListener('resize', this._resize.bind(this));
     window.addEventListener('pointerdown', this._onPointerDown.bind(this));
@@ -606,14 +788,27 @@ class App {
     window.addEventListener('click', this._onPointerClick.bind(this));
   }
 
+  /**
+   * Initializes orbit control event listeners
+   * @private
+   */
   _initializeControlListener() {
     this.controls.addEventListener('change', this._controlsAction.bind(this));
   }
 
+  /**
+   * Handles orbit control change events
+   * @private
+   */
   _controlsAction() {
     this.moved = true;
   }
 
+  /**
+   * Sets the mouse cursor style
+   * @param {string} cursor - The cursor style to set
+   * @private
+   */
   _setCursor(cursor) {
     document.body.style.cursor = cursor;
   }

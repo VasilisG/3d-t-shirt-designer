@@ -25,8 +25,15 @@ import {
 import CanvasRenderer from "../../helpers/canvasRenderer";
 import AbstractItemEditor from "./abstract-item-editor";
 
+/**
+ * Class representing an image item editor for the T-Shirt Designer
+ */
 class ImageItemEditor extends AbstractItemEditor {
 
+  /**
+   * Create an image item editor
+   * @constructor
+   */
   constructor() {
     super();
     this.selector = 'image-item';
@@ -38,6 +45,10 @@ class ImageItemEditor extends AbstractItemEditor {
     this._updateSubmitButton();
   }
 
+  /**
+   * Update the options object based on the current item
+   * @private
+   */
   _updateOptions() {
     this.options = {
       image: this.item !== null ? this.item.options.image : null,
@@ -59,6 +70,10 @@ class ImageItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Update all input fields with current option values
+   * @private
+   */
   _updateInputFieldValues() {
     this._setControlInputValue('horizontal-flip', this.options.transforms.flip.x);
     this._setControlInputValue('vertical-flip', this.options.transforms.flip.y);
@@ -70,6 +85,10 @@ class ImageItemEditor extends AbstractItemEditor {
     this._setControlInputValue('contrast', this.options.filters.contrast);
   }
 
+  /**
+   * Reset the editor to default values
+   * @private
+   */
   _reset() {
     this.options = {
       image: null,
@@ -92,6 +111,10 @@ class ImageItemEditor extends AbstractItemEditor {
     this.mode = MODE_CREATE;
   }
 
+  /**
+   * Initialize all form event listeners
+   * @private
+   */
   _initializeFormListeners() {
     super._initializeFormListeners();
     this._initializeImageUploadListener();
@@ -99,6 +122,10 @@ class ImageItemEditor extends AbstractItemEditor {
     this._initializeRangeListeners();
   }
 
+  /**
+   * Initialize all checkbox listeners
+   * @private
+   */
   _initializeCheckBoxListeners() {
     this._initializeCheckboxListener('horizontal-flip');
     this._initializeCheckboxListener('vertical-flip');
@@ -106,6 +133,11 @@ class ImageItemEditor extends AbstractItemEditor {
     this._initializeCheckboxListener('grayscale');
   }
 
+  /**
+   * Initialize a single checkbox listener
+   * @private
+   * @param {string} selector - The base selector ID for the checkbox
+   */
   _initializeCheckboxListener(selector) {
     const checkbox = document.getElementById(`${selector}-field`);
     checkbox.value = this._getControlInputValue(selector);
@@ -115,6 +147,10 @@ class ImageItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initialize all range input listeners
+   * @private
+   */
   _initializeRangeListeners() {
     this._initializeRangeListener('hue', HUE_MIN_VALUE, HUE_MAX_VALUE, HUE_STEP);
     this._initializeRangeListener('saturation', SATURATION_MIN_VALUE, SATURATION_MAX_VALUE, SATURATION_STEP);
@@ -122,6 +158,14 @@ class ImageItemEditor extends AbstractItemEditor {
     this._initializeRangeListener('contrast', CONTRAST_MIN_VALUE, CONTRAST_MAX_VALUE, CONTRAST_STEP);
   }
 
+  /**
+   * Initialize a single range input listener
+   * @private
+   * @param {string} selector - The base selector ID for the range input
+   * @param {number} minValue - The minimum value for the range
+   * @param {number} maxValue - The maximum value for the range
+   * @param {number} step - The step value for the range
+   */
   _initializeRangeListener(selector, minValue, maxValue, step) {
     const rangeInput = document.getElementById(`${selector}-field`);
     rangeInput.value = this._getControlInputValue(selector);
@@ -135,6 +179,10 @@ class ImageItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initialize image upload listeners
+   * @private
+   */
   _initializeImageUploadListener() {
     const imageUploader = document.getElementById('image-uploader');
     const fileInput = document.getElementById('image-uploader-field');
@@ -157,6 +205,11 @@ class ImageItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Read an uploaded image file
+   * @private
+   * @param {File} file - The uploaded file object
+   */
   _readFile(file) {
     const reader = new FileReader();
 
@@ -182,27 +235,39 @@ class ImageItemEditor extends AbstractItemEditor {
     }
   }
 
-    _getControlInputValue(type) {
-      switch(type) {
-        case 'horizontal-flip':
-          return this.options.transforms.flip.x;
-        case 'vertical-flip':
-          return this.options.transforms.flip.y;
-        case 'color-invert':
-          return this.options.filters.colorInvert;
-        case 'grayscale':
-          return this.options.filters.grayscale;
-        case 'hue':
-          return this.options.filters.hue;
-        case 'saturation':
-          return this.options.filters.saturation;
-        case 'brightness':
-          return this.options.filters.brightness;
-        case 'contrast':
-          return this.options.filters.contrast;
-      }
+  /**
+   * Get the current value for a specific control input
+   * @private
+   * @param {string} type - The type of control
+   * @returns {boolean|number} The current value
+   */
+  _getControlInputValue(type) {
+    switch(type) {
+      case 'horizontal-flip':
+        return this.options.transforms.flip.x;
+      case 'vertical-flip':
+        return this.options.transforms.flip.y;
+      case 'color-invert':
+        return this.options.filters.colorInvert;
+      case 'grayscale':
+        return this.options.filters.grayscale;
+      case 'hue':
+        return this.options.filters.hue;
+      case 'saturation':
+        return this.options.filters.saturation;
+      case 'brightness':
+        return this.options.filters.brightness;
+      case 'contrast':
+        return this.options.filters.contrast;
     }
+  }
 
+  /**
+   * Set the value for a specific control input
+   * @private
+   * @param {string} type - The type of control
+   * @param {boolean|number} value - The value to set
+   */
   _setControlInputValue(type, value) {
     switch(type){
       case 'horizontal-flip':
@@ -232,11 +297,19 @@ class ImageItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Update the editor state based on current options
+   * @private
+   */
   _updateEditorState() {
     super._updateEditorState();
     this._updateInputFieldValues();
   }
 
+  /**
+   * Update the submit button state based on current options
+   * @private
+   */
   _updateSubmitButton() {
     const submitButton = document.getElementById(`${this.selector}-submit-button`);
     if(!this.options.image){

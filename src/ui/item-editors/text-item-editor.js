@@ -27,8 +27,15 @@ import {
 } from '../../constants';
 import AbstractItemEditor from './abstract-item-editor';
 
+/**
+ * Editor class for text items, providing UI controls for text styling, colors, borders, and transforms
+ * @extends AbstractItemEditor
+ */
 class TextItemEditor extends AbstractItemEditor {
 
+  /**
+   * Creates a new TextItemEditor and initializes the UI components
+   */
   constructor() {
 
     super();
@@ -48,11 +55,18 @@ class TextItemEditor extends AbstractItemEditor {
     this._updateSubmitButton(); 
   }
 
+  /**
+   * Updates the editor state and refreshes UI input fields
+   * @override
+   */
   _updateEditorState() {
     super._updateEditorState();
     this._updateInputFieldValues();
   }
 
+  /**
+   * Updates the text item options with current values or defaults
+   */
   _updateOptions() {
     this.options = {
       text: this.item !== null ? this.item.options.text : DEFAULT_TEXT,
@@ -79,6 +93,9 @@ class TextItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Updates all UI input fields with the current option values
+   */
   _updateInputFieldValues() {
     document.getElementById('text-content-field').value = this.options.text;
     document.getElementById('font-family-field').value = this.options.fontFamily;
@@ -100,6 +117,10 @@ class TextItemEditor extends AbstractItemEditor {
     this.borderColorPicker.setColor(this.options.borderColor);
   }
 
+  /**
+   * Initializes all form control listeners including dropdowns, inputs and color pickers
+   * @override
+   */
   _initializeFormListeners() {
     super._initializeFormListeners();
 
@@ -114,11 +135,18 @@ class TextItemEditor extends AbstractItemEditor {
     this.borderColorPicker = this._initializeColorPicker('border-color');
   }
 
+  /**
+   * Initializes all checkbox listeners for flip transformations
+   */
   _initializeCheckBoxListeners() {
     this._initializeCheckboxListener('text-horizontal-flip');
     this._initializeCheckboxListener('text-vertical-flip');
   }
 
+  /**
+   * Initializes a single checkbox listener
+   * @param {string} selector - The selector for the checkbox
+   */
   _initializeCheckboxListener(selector) {
     const checkbox = document.getElementById(`${selector}-field`);
     checkbox.value = this._getControlInputValue(selector);
@@ -128,12 +156,20 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initializes all color pickers for text, background, stroke and border
+   */
   _initializeColorPickers() {
     for(let selector of TEXT_ITEM_COLOR_PICKER_SELECTORS){
       this._initializeColorPicker(selector);
     }
   }
 
+  /**
+   * Initializes a single color picker with event listeners
+   * @param {string} selector - The selector for the color picker
+   * @returns {Pickr} The initialized color picker instance
+   */
   _initializeColorPicker(selector) {
     const colorPicker = new Pickr(COLOR_PICKER_OPTIONS[selector]);
     this._initColorPickerSaveListener(colorPicker, selector);
@@ -141,6 +177,11 @@ class TextItemEditor extends AbstractItemEditor {
     return colorPicker;
   }
 
+  /**
+   * Initializes the save event listener for a color picker
+   * @param {Pickr} colorPicker - The color picker instance
+   * @param {string} type - The type of color picker (text-color, background-color, etc.)
+   */
   _initColorPickerSaveListener(colorPicker, type){
     colorPicker.on('save', (color) => {
       this._setColorValue(type, color);
@@ -148,6 +189,11 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initializes the clear event listener for a color picker
+   * @param {Pickr} colorPicker - The color picker instance
+   * @param {string} type - The type of color picker (text-color, background-color, etc.)
+   */
   _initColorPickerClearListener(colorPicker, type){
     colorPicker.on('clear', () => {
       this._setColorValue(type, TEXT_ITEM_DEFAULT_COLORS[type]);
@@ -155,6 +201,11 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Sets a color value based on the picker type
+   * @param {string} type - The type of color picker (text-color, background-color, etc.)
+   * @param {object} color - The color object from the Pickr instance
+   */
   _setColorValue(type, color){
     switch(type){
       case 'text-color':
@@ -172,6 +223,9 @@ class TextItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Initializes all numeric input control listeners with their respective ranges
+   */
   _initializeControlInputListeners() {
     this._initializeControlInputListener('font-size', 1, 100, DEFAULT_FONT_SIZE);
     this._initializeControlInputListener('rotation', 0, 360, DEFAULT_ROTATION);
@@ -181,6 +235,13 @@ class TextItemEditor extends AbstractItemEditor {
     this._initializeControlInputListener('vertical-padding', 0, 100, DEFAULT_PADDING_VERTICAL);
   }
 
+  /**
+   * Initializes a numeric input control with increment/decrement buttons
+   * @param {string} type - The type of control (font-size, rotation, etc.)
+   * @param {number} minValue - The minimum allowed value
+   * @param {number} maxValue - The maximum allowed value
+   * @param {number} defaultValue - The default value if input is invalid
+   */
   _initializeControlInputListener(type, minValue = 0, maxValue = 100, defaultValue = 0) {
     const inputField = document.getElementById(`${type}-field`);
     const decrementControl = document.getElementById(`${type}-decrement-button`);
@@ -219,6 +280,9 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initializes the text content input field listener
+   */
   _initializeContentInputListener() {
     const contentField = document.getElementById('text-content-field');
     contentField.addEventListener('input', () => {
@@ -228,6 +292,9 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Updates the submit button state based on text content validity
+   */
   _updateSubmitButton() {
     const submitButton = document.getElementById(`${this.selector}-submit-button`);
     if(!this.options.text || this.options.text.trim() === ''){
@@ -236,12 +303,20 @@ class TextItemEditor extends AbstractItemEditor {
     else submitButton.disabled = false;
   }
 
+  /**
+   * Initializes all dropdown select listeners for font properties
+   */
   _initializeDropdownListeners() {
     this._initializeFontFamilyListeners();
     this._initializeDropdownListener('font-weight', FONT_WEIGHTS);
     this._initializeDropdownListener('font-style', FONT_STYLES);
   }
 
+  /**
+   * Initializes a dropdown select listener with options
+   * @param {string} field - The field identifier
+   * @param {object} options - Key-value pairs for dropdown options
+   */
   _initializeDropdownListener(field, options) {
     const dropdown = document.getElementById(`${field}-field`);
     for(let [value, label] of Object.entries(options)) {
@@ -257,6 +332,9 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Initializes the font family dropdown with loaded system fonts
+   */
   _initializeFontFamilyListeners() {
     const validFonts = TEXT_FONTS.map(font => font.name);
     const dropdown = document.getElementById('font-family-field');
@@ -275,6 +353,11 @@ class TextItemEditor extends AbstractItemEditor {
     });
   }
 
+  /**
+   * Gets the current value for a specific control input
+   * @param {string} type - The type of control
+   * @returns {number|string|boolean} The current value of the control
+   */
   _getControlInputValue(type) {
     switch(type) {
       case 'text-horizontal-flip':
@@ -302,6 +385,11 @@ class TextItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Sets a new value for a specific control input
+   * @param {string} type - The type of control
+   * @param {number|string|boolean} value - The new value to set
+   */
   _setControlInputValue(type, value) {
     switch(type){
       case 'text-horizontal-flip':
@@ -340,6 +428,9 @@ class TextItemEditor extends AbstractItemEditor {
     }
   }
 
+  /**
+   * Resets all text options to their default values
+   */
   _reset() {
     this.options = {
       text: DEFAULT_TEXT,
@@ -367,6 +458,9 @@ class TextItemEditor extends AbstractItemEditor {
     this.mode = MODE_CREATE;
   }
 
+  /**
+   * Updates the canvas preview with current text options
+   */
   _updatePreview() {
     this.canvasRenderer.draw(this.options);
   }
