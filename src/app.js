@@ -130,25 +130,6 @@ class App {
   }
 
   /**
-   * Initializes the THREE.js scene
-   * @private
-   */
-  _initializeScene() {
-    this.scene = new THREE.Scene();
-  }
-
-  /**
-   * Initializes the camera with perspective projection
-   * @private
-   */
-  _initializeCamera() {
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
-    this.camera.position.set(0, 0, 1);
-    this.camera.lookAt(0, 0, 0);
-    this.scene.add(this.camera);
-  }
-
-  /**
    * Initializes scene lighting
    * @param {boolean} showLight - Whether to show lighting
    * @param {number} color - Light color in hex format
