@@ -5,10 +5,21 @@ import CanvasRenderer from '../helpers/canvasRenderer';
 import pxToWorldUnits from '../utils/pxToWorldUnits';
 import { ITEM_IMAGE, ITEM_TEXT, MODE_CREATE, MODE_UPDATE } from '../constants';
 
+/**
+ * Class representing an item (text or image) in the T-Shirt Designer
+ */
 class Item {
 
   static totalItems = 0;
 
+  /**
+   * Create an item
+   * @constructor
+   * @param {Object} intersection - The 3D intersection point data
+   * @param {Object} options - The item options (text, image, colors, etc.)
+   * @param {boolean} [preview=false] - Whether this is a preview item
+   * @param {string} [type=ITEM_TEXT] - The type of item (ITEM_TEXT or ITEM_IMAGE)
+   */
   constructor(intersection, options, preview = false, type = ITEM_TEXT) {
 
     Item.totalItems++;
@@ -30,54 +41,108 @@ class Item {
     this._createTextureMesh(intersection, options, preview);
   }
 
+  /**
+   * Get the total number of items created
+   * @static
+   * @returns {number} The total number of items
+   */
   static total() {
     return Item.totalItems;
   }
 
+  /**
+   * Get the unique ID of this item
+   * @returns {string} The item's unique identifier
+   */
   getId() {
     return this.id;
   }
 
+  /**
+   * Get the item options
+   * @returns {Object} The item's options object
+   */
   get options() {
     return this._options;
   }
 
+  /**
+   * Get the item's texture
+   * @returns {THREE.Texture} The item's texture
+   */
   get texture() {
     return this._texture;
   }
 
+  /**
+   * Set the item's texture
+   * @param {THREE.Texture} t - The texture to set
+   */
   set texture(t) {
     this._texture = t;
   }
 
+  /**
+   * Get the item's texture material
+   * @returns {THREE.Material} The item's material
+   */
   get textureMaterial() {
     return this._textureMaterial;
   }
 
+  /**
+   * Set the item's texture material
+   * @param {THREE.Material} tm - The material to set
+   */
   set textureMaterial(tm) {
     this._textureMaterial = tm;
   }
 
+  /**
+   * Get the item's texture mesh
+   * @returns {THREE.Mesh} The item's mesh
+   */
   get textureMesh() {
     return this._textureMesh;
   }
 
+  /**
+   * Set the item's texture mesh
+   * @param {THREE.Mesh} tm - The mesh to set
+   */
   set textureMesh(tm) {
     this._textureMesh = tm;
   }
 
+  /**
+   * Get the type of this item
+   * @returns {string} The item type (ITEM_TEXT or ITEM_IMAGE)
+   */
   getType() {
     return this._type;
   }
 
+  /**
+   * Get the item's canvas element
+   * @returns {HTMLCanvasElement} The item's canvas
+   */
   getCanvas() {
     return this._canvas;
   }
 
+  /**
+   * Get the item's intersection data
+   * @returns {Object} The intersection point data
+   */
   getIntersection() {
     return this._intersection;
   }
 
+  /**
+   * Create the canvas texture from the provided options
+   * @private
+   * @param {Object} options - The rendering options
+   */
   _createCanvasTexture(options) {
     this._canvas = document.createElement('canvas');
     this._canvas.id = `text-item-${Item.totalItems}`;
@@ -102,6 +167,11 @@ class Item {
     this._texture.center.set(0.5, 0.5);
   }
 
+  /**
+   * Create the texture material
+   * @private
+   * @param {boolean} preview - Whether this is for preview mode
+   */
   _createTextureMaterial(preview) {
     this._textureMaterial = new THREE.MeshStandardMaterial({
       map: this.texture,
@@ -117,6 +187,12 @@ class Item {
     });
   }
 
+  /**
+   * Create the decal geometry for the texture
+   * @private
+   * @param {Object|null} [options=null] - The creation options
+   * @param {Object} intersection - The intersection data
+   */
   _createTextureGeometry(options = null, intersection) {
 
     if(options === null || options.mode === MODE_CREATE){
@@ -131,6 +207,13 @@ class Item {
     );
   }
 
+  /**
+   * Create the complete texture mesh from canvas, material, and geometry
+   * @private
+   * @param {Object} intersection - The intersection data
+   * @param {Object} options - The item options
+   * @param {boolean} preview - Whether this is for preview mode
+   */
   _createTextureMesh(intersection, options, preview) {
     this._createCanvasTexture(options);
     this._createTextureMaterial(preview);
@@ -141,6 +224,10 @@ class Item {
     );
   }
 
+  /**
+   * Update the item with new options
+   * @param {Object} options - The new options to apply
+   */
   update(options) {
     this._options = options;
     this._createCanvasTexture(options);
@@ -151,6 +238,10 @@ class Item {
     this._textureMesh.material = this._textureMaterial;
   }
 
+  /**
+   * Update the item's position based on new intersection data
+   * @param {Object} intersection - The new intersection data
+   */
   updatePosition(intersection) {
     this._textureGeometry.dispose();
     this._createTextureGeometry(null, intersection);
