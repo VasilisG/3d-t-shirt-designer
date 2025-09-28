@@ -44,6 +44,7 @@ export const MODE_UPDATE = 'update';
 
 export const TEXT_COLOR_ELEMENT_SELECTOR = '#text-color';
 export const BACKGROUND_COLOR_ELEMENT_SELECTOR = '#background-color';
+export const STROKE_COLOR_ELEMENT_SELECTOR = '#stroke-color';
 export const BORDER_COLOR_ELEMENT_SELECTOR = '#border-color';
 
 export const DEFAULT_FONT_FAMILY = 'Roboto';
@@ -54,6 +55,8 @@ export const DEFAULT_ROTATION = 0;
 export const DEFAULT_TEXT = '';
 export const DEFAULT_TEXT_COLOR = '#000';
 export const DEFAULT_BACKGROUND_COLOR = '#fff';
+export const DEFAULT_STROKE_COLOR = '#00000000';
+export const DEFAULT_STROKE_WIDTH = 0;
 export const DEFAULT_BORDER_COLOR = '#fff';
 export const DEFAULT_BORDER_WIDTH = 0;
 export const DEFAULT_PADDING = 0;
@@ -98,6 +101,12 @@ export const COLOR_PICKER_OPTIONS = {
   },
   'background-color': {
     el: BACKGROUND_COLOR_ELEMENT_SELECTOR,
+    theme: COLOR_PICKER_THEME,
+    default: DEFAULT_BACKGROUND_COLOR,
+    components: COLOR_PICKER_COMPONENTS
+  },
+  'stroke-color': {
+    el: STROKE_COLOR_ELEMENT_SELECTOR,
     theme: COLOR_PICKER_THEME,
     default: DEFAULT_BACKGROUND_COLOR,
     components: COLOR_PICKER_COMPONENTS

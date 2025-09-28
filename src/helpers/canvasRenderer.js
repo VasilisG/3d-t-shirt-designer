@@ -102,6 +102,7 @@ class CanvasRenderer {
     this._rotate(options);
     this._drawBackground(options);
     this._drawText(options);
+    this._strokeText(options);
     this._drawBorder(options);
     this._applyTransforms(options);
   }
@@ -234,6 +235,25 @@ class CanvasRenderer {
     this.ctx.fillText(
       text, 
       this.ctx.canvas.width / 2, 
+      this.ctx.canvas.height / 2
+    );
+  }
+
+  /**
+   * Stroke text with specified stroke color and width
+   * @private
+   * @param {Object} options - The text stroking options. 
+   */
+  _strokeText(options) {
+    const { text, fontSize, fontWeight, fontStyle, fontFamily, strokeColor, strokeWidth } = options;
+    this.ctx.font = `${fontStyle} ${fontWeight} ${fontSize * SCALE_FACTOR}px ${fontFamily}`;
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+    this.ctx.strokeStyle = strokeColor;
+    this.ctx.lineWidth = strokeWidth * SCALE_FACTOR;
+    this.ctx.strokeText(
+      text,
+      this.ctx.canvas.width / 2,
       this.ctx.canvas.height / 2
     );
   }

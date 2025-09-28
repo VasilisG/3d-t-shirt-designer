@@ -21,7 +21,9 @@ import {
   DEFAULT_PADDING_VERTICAL,
   TEXT_FONTS,
   DEFAULT_HORIZONTAL_FLIP,
-  DEFAULT_VERTICAL_FLIP
+  DEFAULT_VERTICAL_FLIP,
+  DEFAULT_STROKE_COLOR,
+  DEFAULT_STROKE_WIDTH
 } from '../../constants';
 import AbstractItemEditor from './abstract-item-editor';
 
@@ -33,6 +35,7 @@ class TextItemEditor extends AbstractItemEditor {
 
     this.textColorPicker = null;
     this.backgroundColorPicker = null;
+    this.strokeColorPicker = null;
     this.borderColorPicker = null;
 
     this.selector = 'text-item';
@@ -60,6 +63,8 @@ class TextItemEditor extends AbstractItemEditor {
       rotation: this.item !== null ? this.item.options.rotation : DEFAULT_ROTATION,
       textColor: this.item !== null ? this.item.options.textColor : DEFAULT_TEXT_COLOR,
       backgroundColor: this.item !== null ? this.item.options.backgroundColor : DEFAULT_BACKGROUND_COLOR,
+      strokeColor: this.item !== null ? this.item.options.strokeColor : DEFAULT_STROKE_COLOR,
+      strokeWidth: this.item !== null ? this.item.options.strokeWidth : DEFAULT_STROKE_WIDTH,
       borderColor: this.item !== null ? this.item.options.borderColor : DEFAULT_BORDER_COLOR,
       borderWidth: this.item !== null ? this.item.options.borderWidth : DEFAULT_BORDER_WIDTH,
       paddingX: this.item !== null ? this.item.options.paddingX : DEFAULT_PADDING_HORIZONTAL,
@@ -81,6 +86,7 @@ class TextItemEditor extends AbstractItemEditor {
     document.getElementById('font-weight-field').value = this.options.fontWeight;
     document.getElementById('font-style-field').value = this.options.fontStyle;
     document.getElementById('rotation-field').value = this.options.rotation;
+    document.getElementById('stroke-width-field').value = this.options.strokeWidth;
     document.getElementById('border-width-field').value = this.options.borderWidth;
     document.getElementById('horizontal-padding-field').value = this.options.paddingX;
     document.getElementById('vertical-padding-field').value = this.options.paddingY;
@@ -90,6 +96,7 @@ class TextItemEditor extends AbstractItemEditor {
 
     this.textColorPicker.setColor(this.options.textColor);
     this.backgroundColorPicker.setColor(this.options.backgroundColor);
+    this.strokeColorPicker.setColor(this.options.strokeColor);
     this.borderColorPicker.setColor(this.options.borderColor);
   }
 
@@ -103,6 +110,7 @@ class TextItemEditor extends AbstractItemEditor {
 
     this.textColorPicker = this._initializeColorPicker('text-color');
     this.backgroundColorPicker = this._initializeColorPicker('background-color');
+    this.strokeColorPicker = this._initializeColorPicker('stroke-color');
     this.borderColorPicker = this._initializeColorPicker('border-color');
   }
 
@@ -155,6 +163,9 @@ class TextItemEditor extends AbstractItemEditor {
       case 'background-color':
         this.options.backgroundColor = `#${color.toHEXA().join('')}`;
         break;
+      case 'stroke-color':
+        this.options.strokeColor = `#${color.toHEXA().join('')}`;
+        break;
       case 'border-color':
         this.options.borderColor = `#${color.toHEXA().join('')}`;
         break;
@@ -164,6 +175,7 @@ class TextItemEditor extends AbstractItemEditor {
   _initializeControlInputListeners() {
     this._initializeControlInputListener('font-size', 1, 100, DEFAULT_FONT_SIZE);
     this._initializeControlInputListener('rotation', 0, 360, DEFAULT_ROTATION);
+    this._initializeControlInputListener('stroke-width', 0, 100, DEFAULT_STROKE_WIDTH);
     this._initializeControlInputListener('border-width', 0, 100, DEFAULT_BORDER_WIDTH);
     this._initializeControlInputListener('horizontal-padding', 0, 100, DEFAULT_PADDING_HORIZONTAL);
     this._initializeControlInputListener('vertical-padding', 0, 100, DEFAULT_PADDING_VERTICAL);
@@ -279,6 +291,8 @@ class TextItemEditor extends AbstractItemEditor {
         return this.options.fontStyle;
       case 'rotation':
         return this.options.rotation;
+      case 'stroke-width':
+        return this.options.strokeWidth;
       case 'border-width':
         return this.options.borderWidth;
       case 'horizontal-padding':
@@ -311,6 +325,9 @@ class TextItemEditor extends AbstractItemEditor {
       case 'rotation':
         this.options.rotation = value;
         break;
+      case 'stroke-width':
+        this.options.strokeWidth = value;
+        break;
       case 'border-width':
         this.options.borderWidth = value;
         break;
@@ -333,6 +350,8 @@ class TextItemEditor extends AbstractItemEditor {
       rotation: DEFAULT_ROTATION,
       textColor: DEFAULT_TEXT_COLOR,
       backgroundColor: DEFAULT_BACKGROUND_COLOR,
+      strokeColor: DEFAULT_STROKE_COLOR,
+      strokeWidth: DEFAULT_STROKE_WIDTH,
       borderColor: DEFAULT_BORDER_COLOR,
       borderWidth: DEFAULT_BORDER_WIDTH,
       paddingX: DEFAULT_PADDING_HORIZONTAL,
