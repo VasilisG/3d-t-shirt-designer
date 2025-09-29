@@ -189,12 +189,12 @@ class CanvasRenderer {
    * @param {Object} options - The text drawing options
    */
   _setupCanvasForText(options) {
-    const { text, fontSize, fontWeight, fontStyle, fontFamily, paddingX, paddingY } = options;
+    const { text, fontSize, fontWeight, fontStyle, fontFamily, paddingX, paddingY, strokeWidth } = options;
     this.ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
     const textSize = this.ctx.measureText(text);
-    this.ctx.canvas.width = (textSize.width + 2 * paddingX) * SCALE_FACTOR;
+    this.ctx.canvas.width = (textSize.width + 2 * paddingX + 2 * strokeWidth) * SCALE_FACTOR;
     this.ctx.canvas.height = (textSize.fontBoundingBoxAscent + textSize.fontBoundingBoxDescent + 2 * paddingY) * SCALE_FACTOR;
   }
 
