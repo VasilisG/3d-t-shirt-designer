@@ -207,7 +207,7 @@ class App {
     // const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x666666);
+    this.scene.background = new THREE.Color(0x8C8C8C);
     // this.scene.environment = pmremGenerator.fromScene(environment).texture;
     this.scene.environment = null;
     // environment.dispose();

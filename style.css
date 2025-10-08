@@ -3,7 +3,7 @@
 :root {
   --popup-bg: #fff;
   --primary-color: #333;
-  --primary-color-hover: #444;
+  --primary-color-hover: #ccc;
   --danger-color: #D11414;
   --danger-color-hover: #ff3434;
   --button-text-color: #fff;
@@ -69,7 +69,7 @@ ul {
   top: 10px;
   transform: translateX(-50%);
   border-radius: 20px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: 0 4px 8px 0 #696969;
 }
 #render-area {
   flex: 1 1 auto;
@@ -288,14 +288,21 @@ ul {
   position: absolute;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 400px;
   height: 100%;
-  background: #fff;
+  padding: 20px;
 }
 .item-list-container-inner {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 #696969;
+}
+.items-tab-container {
+  padding: 10px;
 }
 .items-lists {
   height: 100%;
@@ -303,26 +310,30 @@ ul {
 }
 .items-tab-list {
   display: flex;
-  border-bottom: 1px solid var(--primary-color);
+  /* border-bottom: 1px solid var(--primary-color); */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  gap: 10px;
 }
 .items-tab-item {
   flex: 1;
   text-align: center;
   padding: 10px;
   cursor: pointer;
-  user-select: none;;
+  user-select: none;
+  border-radius: 10px;
+  transition: 0.2s all ease;
+  border: 1px solid var(--primary-color);
 }
 .items-tab-item.active {
   background: var(--primary-color);
   color: #fff;
-  cursor: auto; 
+  cursor: auto;
+  border-color: var(--primary-color);
 }
 .items-tab-item:not(.active):hover {
   background: var(--primary-color-hover);
-  color: #fff;
-}
-.items-tab-item:not(:last-child) {
-  border-right: 1px solid var(--primary-color);
 }
 .items-list-container .items-list {
   overflow-y: scroll;
@@ -343,6 +354,7 @@ ul {
 .items-list-container .items-list .tab-list-item {
   margin-bottom: 20px;
   border: 2px solid var(--primary-color);
+  border-radius: 10px;
   overflow: hidden;
 }
 .items-list-container .items-list .tab-list-item:first-child {
@@ -488,3 +500,5 @@ progress::-moz-progress-value {
 .error-message.visible {
   display: block;
 }
+
+/* https://www.pacdora.com/mockup-detail/raglan-t-shirt-mockup-70002001?id=48725971 */
