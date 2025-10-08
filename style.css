@@ -122,6 +122,7 @@ ul {
   display: block;
   opacity: 0;
   visibility: hidden;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 .popup-visible {
