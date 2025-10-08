@@ -44,14 +44,14 @@
                     <span class="popup-title">Text Item Editor</span>
                     <span class="close-button" id="text-item-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
                 </div>
-                <form class="text-item-editor-form item-editor-form">
+                <form class="text-item-editor-form item-editor-form" id="text-item-editor-form">
                     <div class="text-item-editor-form-wrapper item-editor-form-wrapper">
                         <div class="text-item-editor-form-inner item-editor-form-inner">
                             <label class="option-label">Options</label>
                             <div class="text-item-options item-options">
                                 <div class="text-item-option item-option textarea-option">
                                     <label class="option-label" for="text-content-field">Content</label>
-                                    <textarea class="textarea-field" id="text-content-field" required></textarea>
+                                    <textarea class="textarea-field" id="text-content-field" autocomplete="off" required></textarea>
                                 </div>
                                 <div class="text-item-option item-option dropdown-option">
                                     <label class="option-label" for="font-family-field">Font Family</label>
@@ -77,7 +77,7 @@
                                     <label class="option-label" for="rotation-field">Rotation</label>
                                     <div class="input-controls">
                                         <button type="button" class="control-button decrement-button" id="rotation-decrement-button">-</button>
-                                        <input type="text" id="rotation-field"/>
+                                        <input type="text" id="rotation-field" autocomplete="off"/>
                                         <button type="button" class="control-button increment-button" id="rotation-increment-button">+</button>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                     <label class="option-label" for="stroke-width-field">Stroke Width</label>
                                     <div class="input-controls">
                                         <button type="button" class="control-button decrement-button" id="stroke-width-decrement-button">-</button>
-                                        <input type="text" id="stroke-width-field"/>
+                                        <input type="text" id="stroke-width-field" autocomplete="off"/>
                                         <button type="button" class="control-button increment-button" id="stroke-width-increment-button">+</button>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                     <label class="option-label" for="border-width-field">Border Width</label>
                                     <div class="input-controls">
                                         <button type="button" class="control-button decrement-button" id="border-width-decrement-button">-</button>
-                                        <input type="text" id="border-width-field"/>
+                                        <input type="text" id="border-width-field" autocomplete="off"/>
                                         <button type="button" class="control-button increment-button" id="border-width-increment-button">+</button>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                     <label class="option-label" for="horizontal-padding-field">Horizontal Padding</label>
                                     <div class="input-controls">
                                         <button type="button" class="control-button decrement-button" id="horizontal-padding-decrement-button">-</button>
-                                        <input type="text" id="horizontal-padding-field"/>
+                                        <input type="text" id="horizontal-padding-field" autocomplete="off"/>
                                         <button type="button" class="control-button increment-button" id="horizontal-padding-increment-button">+</button>
                                     </div>
                                 </div>
@@ -133,17 +133,17 @@
                                     <label class="option-label" for="vertical-padding-field">Vertical Padding</label>
                                     <div class="input-controls">
                                         <button type="button" class="control-button decrement-button" id="vertical-padding-decrement-button">-</button>
-                                        <input type="text" id="vertical-padding-field"/>
+                                        <input type="text" id="vertical-padding-field" autocomplete="off"/>
                                         <button type="button" class="control-button increment-button" id="vertical-padding-increment-button">+</button>
                                     </div>
                                 </div>
                                 <div class="text-horizontal-flip-option item-option">
                                     <label class="option-label" for="text-horizontal-flip-field">Horizontal Flip</label>
-                                    <input type="checkbox" id="text-horizontal-flip-field"/>
+                                    <input type="checkbox" id="text-horizontal-flip-field" autocomplete="off"/>
                                 </div>
                                 <div class="text-vertical-flip-option item-option">
                                     <label class="option-label" for="text-vertical-flip-field">Vertical Flip</label>
-                                    <input type="checkbox" id="text-vertical-flip-field"/>
+                                    <input type="checkbox" id="text-vertical-flip-field" autocomplete="off"/>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                     <span class="popup-title">Image Item Editor</span>
                     <span class="close-button" id="image-item-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
                 </div>
-                <form class="image-item-editor-form item-editor-form">
+                <form class="image-item-editor-form item-editor-form" id="image-item-editor-form">
                     <div class="image-item-editor-form-wrapper item-editor-form-wrapper">
                         <div class="image-item-editor-form-inner item-editor-form-inner">
                             <label class="option-label">Options</label>
@@ -176,39 +176,39 @@
                                     <div class="image-uploader" id="image-uploader">
                                         <img class="action-icon upload-icon" src="/assets/icons/image-upload.svg" alt="Image Upload"/>
                                         <p class="upload-info">Click here to <span class="highlight">upload</span> an image.</p>
-                                        <input type="file" id="image-uploader-field" accept="image/*" />
+                                        <input type="file" id="image-uploader-field" accept="image/*" autocomplete="off"/>
                                     </div>
                                     <div class="horizontal-flip-option item-option">
                                         <label class="option-label" for="horizontal-flip-field">Horizontal Flip</label>
-                                        <input type="checkbox" id="horizontal-flip-field"/>
+                                        <input type="checkbox" id="horizontal-flip-field" autocomplete="off"/>
                                     </div>
                                     <div class="vertical-flip-option item-option">
                                         <label class="option-label" for="vertical-flip-field">Vertical Flip</label>
-                                        <input type="checkbox" id="vertical-flip-field"/>
+                                        <input type="checkbox" id="vertical-flip-field" autocomplete="off"/>
                                     </div>
                                     <div class="color-invert-option item-option">
                                         <label class="option-label" for="color-invert-field">Color Invert</label>
-                                        <input type="checkbox" id="color-invert-field"/>
+                                        <input type="checkbox" id="color-invert-field" autocomplete="off"/>
                                     </div>
                                     <div class="grayscale-option item-option">
                                         <label class="option-label" for="grayscale-field">Grayscale</label>
-                                        <input type="checkbox" id="grayscale-field"/>
+                                        <input type="checkbox" id="grayscale-field" autocomplete="off"/>
                                     </div>
                                     <div class="hue-option item-option">
                                         <label class="option-label" for="hue-field">Hue</label>
-                                        <input type="range" min="0" max="360" step="1" value="0" id="hue-field"/>
+                                        <input type="range" min="0" max="360" step="1" value="0" id="hue-field" autocomplete="off"/>
                                     </div>
                                     <div class="saturation-option item-option">
                                         <label class="option-label" for="saturation-field">Saturation</label>
-                                        <input type="range" min="0" max="100" step="1" value="100" id="saturation-field"/>
+                                        <input type="range" min="0" max="100" step="1" value="100" id="saturation-field" autocomplete="off"/>
                                     </div>
                                     <div class="brightness-option item-option">
                                         <label class="option-label" for="brightness-field">Brightness</label>
-                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="brightness-field"/>
+                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="brightness-field" autocomplete="off"/>
                                     </div>
                                     <div class="contrast-option item-option">
                                         <label class="option-label" for="contrast-field">Contrast</label>
-                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="contrast-field"/>
+                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="contrast-field" autocomplete="off"/>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                 <div class="model-exporter-options item-options">
                     <div class="model-exporter-option item-option text-option">
                         <label class="option-label" for="filename-field">File Name</label>
-                        <input type="text" class="text-field" id="filename-field" required></input>
+                        <input type="text" class="text-field" id="filename-field" autocomplete="off" required></input>
                         <span class="error-message" id="filename-error-message">Filename can contain only letters, numbers, hyphens, dots, and underscores.</span>
                     </div>
                 </div>

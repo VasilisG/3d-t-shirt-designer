@@ -5,7 +5,7 @@ import '@simonwep/pickr/dist/themes/monolith.min.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+// import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import ItemManager from './items/itemManager';
 import ActionMenu from './ui/actions/actions-menu';
 import Action from './ui/actions/action';

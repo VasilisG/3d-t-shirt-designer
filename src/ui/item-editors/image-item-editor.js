@@ -36,6 +36,7 @@ class ImageItemEditor extends AbstractItemEditor {
    */
   constructor() {
     super();
+
     this.selector = 'image-item';
     this.editor = document.getElementById(`${this.selector}-editor`);
     this.previewCanvas = document.getElementById(`${this.selector}-preview-canvas`);
