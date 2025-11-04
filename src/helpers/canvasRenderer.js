@@ -1,4 +1,4 @@
-import { ITEM_IMAGE, ITEM_TEXT, MAX_HEIGHT, MAX_WIDTH, SCALE_FACTOR } from "../constants";
+import { ITEM_TEXT, MAX_HEIGHT, MAX_WIDTH, SCALE_FACTOR } from "../constants";
 import ColorInvertFilter from "../filters/colorInvertFilter";
 import GrayscaleFilter from "../filters/grayscaleFilter";
 import HueFilter from "../filters/hueFilter";
