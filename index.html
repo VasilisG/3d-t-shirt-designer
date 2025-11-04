@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>3D T-Shirt Designer</title>
+        <link rel="icon" type="image/x-icon" href="/assets/favicon-CKcKbEs0.ico">
+      <script type="module" crossorigin src="/assets/index-DWvQTAPZ.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-C_Lr5RjI.css">
+    </head>
+    <body class="app-wrapper">
+        <div class="main-app-container">
+
+            <!-- Actions Container -->
+            <div class="actions-container" id="actions-container">
+                <ul class="actions-list">
+                    <li class="action-item" id="action-color" title="Change T-Shirt Color"><img class="action-icon color-icon" src="/assets/icons/color.svg" alt="Color"/></li>
+                    <li class="action-item" id="action-select" title="Select Item"><img class="action-icon select-icon" src="/assets/icons/select.svg" alt="Select"/></li>
+                    <li class="action-item" id="action-text" title="Add Text Item"><img class="action-icon add-text-icon" src="/assets/icons/text.svg" alt="Add Text"/></li>
+                    <li class="action-item" id="action-image" title="Add Image Item"><img class="action-icon add-image-icon" src="/assets/icons/image.svg" alt="Add Image"/></li>
+                    <li class="action-item" id="action-export" title="Export Design"><img class="action-icon export-icon" src="/assets/icons/export.svg" alt="Export"/></li>
+                </ul>
+            </div>
+
+            <!-- Items List Container -->
+             <div class="items-list-container" id="items-list-container">
+                <div class="item-list-container-inner">
+                    <div class="items-tab-container">
+                        <ul class="items-tab-list">
+                            <li class="items-tab-item active" id="items-tab-text">Text Items</li>
+                            <li class="items-tab-item" id="items-tab-image">Image Items</li>
+                        </ul>
+                    </div>
+                    <div class="items-lists">
+                        <div class="items-list items-text-list" data-tab-id="items-tab-text"></div>
+                        <div class="items-list items-image-list" data-tab-id="items-tab-image"></div>
+                    </div>
+                </div>
+             </div>
+
+            <!-- Text item creator / editor -->
+             <div id="text-item-editor" class="text-item-editor-container popup-container">
+                <div class="close-action-container">
+                    <span class="popup-title">Text Item Editor</span>
+                    <span class="close-button" id="text-item-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
+                </div>
+                <form class="text-item-editor-form item-editor-form" id="text-item-editor-form">
+                    <div class="text-item-editor-form-wrapper item-editor-form-wrapper">
+                        <div class="text-item-editor-form-inner item-editor-form-inner">
+                            <label class="option-label">Options</label>
+                            <div class="text-item-options item-options">
+                                <div class="text-item-option item-option textarea-option">
+                                    <label class="option-label" for="text-content-field">Content</label>
+                                    <textarea class="textarea-field" id="text-content-field" autocomplete="off" required></textarea>
+                                </div>
+                                <div class="text-item-option item-option dropdown-option">
+                                    <label class="option-label" for="font-family-field">Font Family</label>
+                                    <select id="font-family-field"></select>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="font-size-field">Font Size</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="font-size-decrement-button">-</button>
+                                        <input type="text" id="font-size-field"/>
+                                        <button type="button" class="control-button increment-button" id="font-size-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option dropdown-option">
+                                    <label class="option-label" for="font-weight-field">Font Weight</label>
+                                    <select id="font-weight-field"></select>
+                                </div>
+                                <div class="text-item-option item-option dropdown-option">
+                                    <label class="option-label" for="font-style-field">Font Style</label>
+                                    <select id="font-style-field"></select>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="rotation-field">Rotation</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="rotation-decrement-button">-</button>
+                                        <input type="text" id="rotation-field" autocomplete="off"/>
+                                        <button type="button" class="control-button increment-button" id="rotation-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option color-option">
+                                    <label class="option-label">Text Color</label>
+                                    <div class="input-controls">
+                                        <span id="text-color"></span>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option color-option">
+                                    <label class="option-label">Background Color</label>
+                                    <div class="input-controls">
+                                        <span id="background-color"></span>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option color-option">
+                                    <label class="option-label">Stroke Color</label>
+                                    <div class="input-controls">
+                                        <span id="stroke-color"></span>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="stroke-width-field">Stroke Width</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="stroke-width-decrement-button">-</button>
+                                        <input type="text" id="stroke-width-field" autocomplete="off"/>
+                                        <button type="button" class="control-button increment-button" id="stroke-width-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option color-option">
+                                    <label class="option-label">Border Color</label>
+                                    <div class="input-controls">
+                                        <span id="border-color"></span>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="border-width-field">Border Width</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="border-width-decrement-button">-</button>
+                                        <input type="text" id="border-width-field" autocomplete="off"/>
+                                        <button type="button" class="control-button increment-button" id="border-width-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="horizontal-padding-field">Horizontal Padding</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="horizontal-padding-decrement-button">-</button>
+                                        <input type="text" id="horizontal-padding-field" autocomplete="off"/>
+                                        <button type="button" class="control-button increment-button" id="horizontal-padding-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-item-option item-option">
+                                    <label class="option-label" for="vertical-padding-field">Vertical Padding</label>
+                                    <div class="input-controls">
+                                        <button type="button" class="control-button decrement-button" id="vertical-padding-decrement-button">-</button>
+                                        <input type="text" id="vertical-padding-field" autocomplete="off"/>
+                                        <button type="button" class="control-button increment-button" id="vertical-padding-increment-button">+</button>
+                                    </div>
+                                </div>
+                                <div class="text-horizontal-flip-option item-option">
+                                    <label class="option-label" for="text-horizontal-flip-field">Horizontal Flip</label>
+                                    <input type="checkbox" id="text-horizontal-flip-field" autocomplete="off"/>
+                                </div>
+                                <div class="text-vertical-flip-option item-option">
+                                    <label class="option-label" for="text-vertical-flip-field">Vertical Flip</label>
+                                    <input type="checkbox" id="text-vertical-flip-field" autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-item-preview item-preview">
+                            <label class="option-label">Preview</label>
+                            <div class="text-item-canvas-container item-canvas-container">
+                                <canvas id="text-item-preview-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons-container">
+                        <button type="button" class="action-button submit-button" id="text-item-submit-button">OK</button>
+                        <button type="button" class="action-button cancel-button" id="text-item-cancel-button">Cancel</button>
+                    </div>
+                </form>
+             </div>
+
+             <!-- Image item creator / editor -->
+              <div id="image-item-editor" class="image-item-editor-container popup-container">
+                <div class="close-action-container">
+                    <span class="popup-title">Image Item Editor</span>
+                    <span class="close-button" id="image-item-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
+                </div>
+                <form class="image-item-editor-form item-editor-form" id="image-item-editor-form">
+                    <div class="image-item-editor-form-wrapper item-editor-form-wrapper">
+                        <div class="image-item-editor-form-inner item-editor-form-inner">
+                            <label class="option-label">Options</label>
+                            <div class="image-item-options item-options">
+                                <div class="image-uploader-container">
+                                    <div class="image-uploader" id="image-uploader">
+                                        <img class="action-icon upload-icon" src="/assets/icons/image-upload.svg" alt="Image Upload"/>
+                                        <p class="upload-info">Click here to <span class="highlight">upload</span> an image.</p>
+                                        <input type="file" id="image-uploader-field" accept="image/*" autocomplete="off"/>
+                                    </div>
+                                    <div class="horizontal-flip-option item-option">
+                                        <label class="option-label" for="horizontal-flip-field">Horizontal Flip</label>
+                                        <input type="checkbox" id="horizontal-flip-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="vertical-flip-option item-option">
+                                        <label class="option-label" for="vertical-flip-field">Vertical Flip</label>
+                                        <input type="checkbox" id="vertical-flip-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="color-invert-option item-option">
+                                        <label class="option-label" for="color-invert-field">Color Invert</label>
+                                        <input type="checkbox" id="color-invert-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="grayscale-option item-option">
+                                        <label class="option-label" for="grayscale-field">Grayscale</label>
+                                        <input type="checkbox" id="grayscale-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="hue-option item-option">
+                                        <label class="option-label" for="hue-field">Hue</label>
+                                        <input type="range" min="0" max="360" step="1" value="0" id="hue-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="saturation-option item-option">
+                                        <label class="option-label" for="saturation-field">Saturation</label>
+                                        <input type="range" min="0" max="100" step="1" value="100" id="saturation-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="brightness-option item-option">
+                                        <label class="option-label" for="brightness-field">Brightness</label>
+                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="brightness-field" autocomplete="off"/>
+                                    </div>
+                                    <div class="contrast-option item-option">
+                                        <label class="option-label" for="contrast-field">Contrast</label>
+                                        <input type="range" min="0" max="1" step="0.01" value="0.5" id="contrast-field" autocomplete="off"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-item-preview item-preview">
+                            <label class="option-label">Preview</label>
+                            <div class="image-item-canvas-container item-canvas-container">
+                                <canvas id="image-item-preview-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons-container">
+                        <button type="button" class="action-button submit-button" id="image-item-submit-button">OK</button>
+                        <button type="button" class="action-button cancel-button" id="image-item-cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Model exporter -->
+             <div id="model-exporter-editor" class="model-exporter-container popup-container">
+                <div class="close-action-container">
+                    <span class="popup-title">Model Exporter</span>
+                    <span class="close-button" id="model-exporter-editor-close-button"><img class="action-icon close-icon" src="/assets/icons/close.svg" alt="Close"/></span>
+                </div>
+                <div class="model-exporter-options item-options">
+                    <div class="model-exporter-option item-option text-option">
+                        <label class="option-label" for="filename-field">File Name</label>
+                        <input type="text" class="text-field" id="filename-field" autocomplete="off" required></input>
+                        <span class="error-message" id="filename-error-message">Filename can contain only letters, numbers, hyphens, dots, and underscores.</span>
+                    </div>
+                </div>
+                <form class="model-exporter-form model-exporter-form">
+                    <div class="action-buttons-container">
+                        <button type="button" class="action-button submit-button" id="model-exporter-submit-button">Export</button>
+                        <button type="button" class="action-button cancel-button" id="model-exporter-cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Loading bar -->
+            <div class="loading-bar-container" id="loading-bar-container">
+                <div class="loading-bar">
+                    <label class="loading-message" id="loading-message" for="loading-progress">Loading:</label>
+                    <progress class="loading-progress" id="loading-progress" value="0" max="100">0%</progress>
+                </div>
+            </div>
+
+            <!-- Popup overlay -->
+            <div class="popup-overlay" id="popup-overlay"></div>
+
+            <!-- 3D model render area. -->
+            <canvas class="canvas-container" id="render-area"></canvas>
+        </div>
+    </body>
+</html>
