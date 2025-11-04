@@ -7,15 +7,18 @@ export const MAX_HEIGHT = 256;
 export const ITEM_TEXT = 'item-text';
 export const ITEM_IMAGE = 'item-image';
 
+/* Base path. */
+export const BASE_PATH = '3d-t-shirt-designer';
+
 /* Item fonts. */
 export const TEXT_FONTS = [
   {
     name: 'Roboto',
-    url: './assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf'
+    url: `./${BASE_PATH}/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf`
   },
   {
     name: 'Roboto Italic',
-    url: './assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf'
+    url: `./${BASE_PATH}/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf`
   }
 ];
 
