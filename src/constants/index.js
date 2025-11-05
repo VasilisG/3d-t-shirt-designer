@@ -14,11 +14,11 @@ export const BASE_PATH = '3d-t-shirt-designer';
 export const TEXT_FONTS = [
   {
     name: 'Roboto',
-    url: `./${BASE_PATH}/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf`
+    url: `./assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf`
   },
   {
     name: 'Roboto Italic',
-    url: `./${BASE_PATH}/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf`
+    url: `./assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf`
   }
 ];
 
