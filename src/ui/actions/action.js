@@ -9,12 +9,17 @@ class Action {
    * @param {Array} states - The state associated with this actions
    * @throws {Error} If element with provided ID is not found
    */
-  constructor(actionElementId, states) {
+  constructor(actionElementId, states = []) {
     this.states = states;
     this.element = document.getElementById(actionElementId);
     if (!this.element) {
       throw new Error(`Element with ID ${actionElementId} not found.`);
     }
+  }
+
+  /** Get current element that this action is associated with */
+  getElement() {
+    return this.element;
   }
 
   /**
@@ -49,10 +54,10 @@ class Action {
    */
   updateStatus(currentState){
     if(this.states.includes(currentState)) {
-      this.element.classList.add('active');
+        this.element.classList.add('active');
+      }
+      else this.element.classList.remove('active');
     }
-    else this.element.classList.remove('active');
-  }
 }
 
 export default Action;

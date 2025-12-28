@@ -263,6 +263,14 @@ class ItemsTabContainer {
       this.editItemCallback(item);
     }
   }
+
+  /**
+   * Toggle the visibility of the items tab container
+   */
+  toggleVisibility() {
+    const container = document.querySelector('.items-list-container');
+    container.classList.toggle('items-list-container-hidden');
+  }
 }
 
 export default ItemsTabContainer;

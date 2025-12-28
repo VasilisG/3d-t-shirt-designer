@@ -25,7 +25,8 @@ import {
   ACTION_TEXT,
   ACTION_IMAGE,
   CURSOR_STATES,
-  ACTION_EXPORT
+  ACTION_EXPORT,
+  ACTION_SHOW_LIST
 } from './constants';
 import LoadingBar from './ui/loading-bar';
 import ItemSelector from './ui/item-selector';
@@ -724,6 +725,12 @@ class App {
       this.windowOpen = true;
       this.currentState = STATES.EXPORT;
       this.actionsMenu.updateMenuItemStatus(this.currentState);
+    });
+
+    const showListAction = new Action(ACTION_SHOW_LIST);
+    showListAction.onClick(() => {
+      this.itemsTabContainer.toggleVisibility();
+      showListAction.getElement().classList.toggle('inverted');
     });
 
     this.actionsMenu.addAction(selectAction);

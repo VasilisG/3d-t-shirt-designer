@@ -124,6 +124,8 @@ ul {
   visibility: hidden;
   border-radius: 10px;
   transition: all 0.3s ease;
+  max-width: 80%;
+  max-height: 500px;
 }
 .popup-visible {
   opacity: 1;
@@ -132,6 +134,7 @@ ul {
 }
 .item-editor-form-wrapper {
   display: flex;
+  height: 350px;
 }
 .item-editor-form-inner, .item-preview {
   flex: 1;
@@ -158,12 +161,13 @@ ul {
   border-top: 1px solid #ccc;
 }
 .item-options {
-  height: 500px;
-  max-height: 500px;
+  height: calc(100% - 60px);
+  max-height: 100%;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f0f0f0;
   padding: 20px;
+  border-right: 1px solid #000;
 }
 .control-button {
   width: 50px;
@@ -209,6 +213,7 @@ ul {
   padding: 15px;
   border-bottom: 1px solid var(--primary-color);
   border-top: 1px solid var(--primary-color);
+  height: 60px;
 }
 .item-editor-form-inner > .option-label {
   border-right: 1px solid var(--primary-color);
@@ -226,6 +231,7 @@ ul {
   background: var(--primary-color);
   padding: 15px;
   color: #fff;
+  height: 50px;
 }
 .action-buttons-container {
   padding: 20px;
@@ -291,14 +297,16 @@ ul {
   left: 0;
   width: 400px;
   height: 100%;
-  padding: 20px;
+  transition: 0.3s all ease;
+}
+.items-list-container-hidden {
+  left: -400px;
 }
 .item-list-container-inner {
   height: 100%;
   display: flex;
   flex-direction: column;
   background: #fff;
-  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px 0 #696969;
 }
@@ -402,19 +410,25 @@ ul {
 .tab-list-item-canvas {
   max-width: 100%;
 }
-.actions-list .action-item:not(.active):hover {
+.actions-list .action-item:not(.active):not(#action-show-list):hover {
   background: #58a5e4;;
 }
 .actions-list .action-item.active {
   background: #1171c0;
 }
 .action-item.active .action-icon,
-.action-item:not(.active):hover .action-icon {
+.action-item:not(.active):not(#action-show-list):hover .action-icon {
   filter: invert(1);
 }
 .actions-list .pickr .pcr-button::before,
 .actions-list .pickr .pcr-button::after {
   top: -1px;
+}
+.actions-list .action-item#action-show-list .action-icon {
+  transition: transform 0.3s ease;
+}
+.actions-list .action-item#action-show-list.inverted .action-icon {
+  transform: rotate(180deg);
 }
 .image-uploader {
   border: 3px dashed #464646;
@@ -485,6 +499,7 @@ progress::-moz-progress-value {
 .model-exporter-options.item-options {
   max-height: 150px;
   overflow: unset;
+  border-right: none;
 }
 .model-exporter-option.item-option.text-option {
   align-items: center;
@@ -500,6 +515,74 @@ progress::-moz-progress-value {
 }
 .error-message.visible {
   display: block;
+}
+.item-editor-form {
+  height: calc(100% - 50px);
+  max-height: 550px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 1280px) {
+  .actions-container {
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    max-width: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .actions-list {
+    flex-direction: column;
+  }
+
+  .items-list-container {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 50%;
+    min-width: 360px;
+    max-height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .items-list-container-hidden {
+    top: -50%;
+  }
+
+  .popup-container {
+    width: 90%;
+    min-width: unset;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .popup-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .actions-container {
+    top: 0;
+    transform: translateX(-50%);
+    left: 50%;
+    max-width: unset;
+    padding: 0;
+  }
+  .actions-list {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .items-list-container {
+    top: 65%;
+    width: 100%;
+  }
+  .items-list-container-hidden {
+    left: -50%;
+  }
 }
 
 /* https://www.pacdora.com/mockup-detail/raglan-t-shirt-mockup-70002001?id=48725971 */

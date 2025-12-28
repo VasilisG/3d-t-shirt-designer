@@ -158,6 +158,7 @@ export const ACTION_SELECT = 'action-select';
 export const ACTION_TEXT = 'action-text';
 export const ACTION_IMAGE = 'action-image';
 export const ACTION_EXPORT = 'action-export';
+export const ACTION_SHOW_LIST = 'action-show-list';
 
 /* App states. */
 export const STATES = Object.freeze({
