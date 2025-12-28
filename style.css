@@ -583,6 +583,25 @@ progress::-moz-progress-value {
   .items-list-container-hidden {
     left: -50%;
   }
+  .item-editor-form-wrapper {
+    display: flex;
+    height: 350px;
+    flex-direction: column-reverse;
+    overflow: scroll;
+  }
+  .error-message {
+    text-align: center;
+  }
+  .item-options,
+  .item-editor-form-inner > .option-label {
+    border-right: none;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .action-item {
+    padding: 0;
+  }
 }
 
 /* https://www.pacdora.com/mockup-detail/raglan-t-shirt-mockup-70002001?id=48725971 */

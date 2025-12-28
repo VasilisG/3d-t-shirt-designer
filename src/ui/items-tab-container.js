@@ -15,6 +15,7 @@ class ItemsTabContainer {
     this.tabItems = [];
     this.deleteItemCallback = null;
     this.editItemCallback = null;
+    this.element = document.querySelector('.items-list-container');
     this._initialize(activeTabId);
   }
 
@@ -265,11 +266,24 @@ class ItemsTabContainer {
   }
 
   /**
+   * Show the items tab container
+   */
+  show() {
+    this.element.classList.remove('items-list-container-hidden');
+  }
+
+  /**
+   * Hide the items tab container
+   */
+  hide() {
+    this.element.classList.add('items-list-container-hidden');
+  }
+
+  /**
    * Toggle the visibility of the items tab container
    */
   toggleVisibility() {
-    const container = document.querySelector('.items-list-container');
-    container.classList.toggle('items-list-container-hidden');
+    this.element.classList.toggle('items-list-container-hidden');
   }
 }
 

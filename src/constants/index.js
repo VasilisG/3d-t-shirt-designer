@@ -177,3 +177,6 @@ export const CURSOR_STATES = Object.freeze({
   AUTO: 'auto',
   POINTER: 'pointer',
 });
+
+/* Mobile breakpoint */
+export const MOBILE_BREAKPOINT = 768;

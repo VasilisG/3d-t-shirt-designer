@@ -31,6 +31,7 @@ import {
 import LoadingBar from './ui/loading-bar';
 import ItemSelector from './ui/item-selector';
 import ModelExporter from './ui/model-exporter';
+import { isMobileSize } from './utils/mobile';
 
 /**
  * Main application class for 3D T-Shirt Designer
@@ -125,6 +126,8 @@ class App {
     
     // Initialize line geometry (from main.js)
     this._initializeLineGeometry();
+
+    this._resize();
 
     /* Hide loading bar. */
     this.loadingBar.hide();
@@ -613,6 +616,10 @@ class App {
     this.itemsTabContainer.onItemDelete((item) => {
       this._tabDeleteItem(item);
     });
+
+    if(isMobileSize()){
+      this.itemsTabContainer.hide();
+    }
   }
 
   /**
@@ -728,6 +735,9 @@ class App {
     });
 
     const showListAction = new Action(ACTION_SHOW_LIST);
+    if(isMobileSize()){
+      showListAction.getElement().classList.add('inverted');
+    }
     showListAction.onClick(() => {
       this.itemsTabContainer.toggleVisibility();
       showListAction.getElement().classList.toggle('inverted');
