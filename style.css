@@ -524,7 +524,7 @@ progress::-moz-progress-value {
 }
 
 @media screen and (max-width: 1280px) {
-  .actions-container {
+  /* .actions-container {
     top: 50%;
     transform: translateY(-50%);
     left: 0;
@@ -535,7 +535,7 @@ progress::-moz-progress-value {
 
   .actions-list {
     flex-direction: column;
-  }
+  } */
 
   .items-list-container {
     top: 50%;
@@ -577,11 +577,11 @@ progress::-moz-progress-value {
     justify-content: center;
   }
   .items-list-container {
-    top: 65%;
+    top: 40%;
     width: 100%;
   }
   .items-list-container-hidden {
-    left: -50%;
+    left: -100%;
   }
   .item-editor-form-wrapper {
     display: flex;
@@ -596,11 +596,30 @@ progress::-moz-progress-value {
   .item-editor-form-inner > .option-label {
     border-right: none;
   }
+  .items-lists {
+    overflow: scroll;
+  }
+  .popup-container {
+    top: 40%;
+  }
 }
 
 @media screen and (max-width: 420px) {
+  .actions-container {
+    width: 100%;
+    border-radius: 0;
+  }
+  .actions-list {
+    justify-content: space-around;
+  }
   .action-item {
     padding: 0;
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+  }
+  .action-icon {
+    max-height: 30px;
   }
 }
 

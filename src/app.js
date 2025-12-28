@@ -616,10 +616,6 @@ class App {
     this.itemsTabContainer.onItemDelete((item) => {
       this._tabDeleteItem(item);
     });
-
-    if(isMobileSize()){
-      this.itemsTabContainer.hide();
-    }
   }
 
   /**
@@ -735,9 +731,7 @@ class App {
     });
 
     const showListAction = new Action(ACTION_SHOW_LIST);
-    if(isMobileSize()){
-      showListAction.getElement().classList.add('inverted');
-    }
+    showListAction.getElement().classList.add('inverted');
     showListAction.onClick(() => {
       this.itemsTabContainer.toggleVisibility();
       showListAction.getElement().classList.toggle('inverted');
